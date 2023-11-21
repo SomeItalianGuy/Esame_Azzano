@@ -150,10 +150,11 @@ int main() {
         population->Get_Id_list(idList);
         population->Calculate_currentPercentage();
         while (population->Size() > population->Get_genMaxPopulation()) {
-          auto id = idList.begin();
-          int randomId = RNG->GetRandomInt(0, idList.size() - 1);
+          // Riguarda quest parte che è sbagliata
+          auto id = idList.begin();// <- l'errore è qui
+          int randomId = RNG->GetRandomInt(0, idList.size() - 1); // <- l'errore è qui
           population->Kill_individual(idList[randomId]);
-          idList.erase(id);
+          idList.erase(id);// <- l'errore è qui
         }
         for (int i = 0; i < population->Get_genMaxPopulation()/2; i++) {
           Place place;
