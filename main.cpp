@@ -43,7 +43,6 @@ int main() {
 
       << "Please input a seed, it can be a character, a word, a "
          "sentence or a number: ";
-  std::cout << '\n';
   std::cin >> userStringInput;
   std::shared_ptr<RNGHelper> RNG = RNGHelper::instance(userStringInput);
   std::cout << '\n';
@@ -109,7 +108,7 @@ int main() {
   std::shared_ptr<Population> population = Population::Population_instance(
       RNG->GetRandomDouble(3.5, 4.),
       passiveNumber + aggressiveNumber + adaptableNumber,
-      RNG->GetRandomDouble(0., 1.));
+      RNG->GetRandomDouble(0.01, 0.99));
 
   for (int i = 0; i < passiveNumber; ++i) {
     population->Generate_individual(Behavior::Passive);
@@ -123,27 +122,47 @@ int main() {
 
   std::vector<Place> availablePlaces;
   std::vector<int> availablePlacesIndex;
+  std::vector<int> idList;
   std::vector<GenerationData> simulatioData;
+  
 
   simulatioData.push_back(population->WriteTo_GenerationData());
 
     std::cout << '\n';
     std::cout << "Now we are set to go, here is a list of all the possible "
-                 "commands:\n "
+                 "commands:\n"
               << "-run [value]          : lets you run a number equal to value of generations, for each generation prints"
                  "the number of individuals for each behavior;\n"
-              << "-q          : lets you quit the simulation.\n"
+              << "-quit                 : lets you quit the simulation.\n"
               << '\n';
     int userIntInput;
 
-    std::cout << "What would you like to do?\n";
+    std::cout << "What would you like to do now? ";
     std::cout << '\n';
     while (std::cin >> userStringInput) {
+    std::cout << "What would you like to do now? ";
       if(std::cin.peek() == '\n') {
         userIntInput = 0;
       } else {
         std::cin >> userIntInput;
       }
+      if (userStringInput == "run") {
+        population->Get_Id_list(idList);
+        population->Calculate_currentPercentage();
+        while (population->Size() > population->Get_genMaxPopulation()) {
+          auto id = idList.begin();
+          int randomId = RNG->GetRandomInt(0, idList.size() - 1);
+          population->Kill_individual(idList[randomId]);
+          idList.erase(id);
+        }
+        // Settare i luoghi casualmente
+        // Interazione
+        // Carica i dati su data
+      } else if (userStringInput == "quit") {
+        break;
+      } else {
+        std::cout << "Invalid command, try one of the two valid commands\n";
+      } 
     }
   } catch (std::range_error& error) {
     std::cout << error.what() << '\n';
@@ -152,4 +171,6 @@ int main() {
   } catch (...) {
     std::cout << "Unkown error has occured" << '\n';
   }
+
+  // Implementare la scrittura su file e la stampa dei grafici
 }

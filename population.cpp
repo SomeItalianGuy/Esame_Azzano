@@ -195,7 +195,7 @@ void Population::SaveSimulationToFile(std::vector<GenerationData> const& data,
                 data[0].adaptableNumber
          << '\n';
     file << '\n';
-    for (int i = 1; i < data.size(); i++) {
+    for (unsigned long int i = 1; i < data.size(); i++) {
       file << "Generation number " << i << '\n';
       file << '\n';
       file << '\n';
@@ -223,4 +223,8 @@ void Population::SaveSimulationToFile(std::vector<GenerationData> const& data,
   } else {
     std::cout << "Couldn't open file" << '\n';
   }
+}
+
+int Population::Size() {
+  return group_.size();
 }

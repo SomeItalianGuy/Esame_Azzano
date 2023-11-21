@@ -63,6 +63,7 @@ class Population {
   GenerationData WriteTo_GenerationData();
   void SaveSimulationToFile(std::vector<GenerationData> const& data,
                             std::ofstream& file);
+  int Size();
 };
 
 #endif
