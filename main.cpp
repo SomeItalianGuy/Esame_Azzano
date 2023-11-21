@@ -155,6 +155,19 @@ int main() {
           population->Kill_individual(idList[randomId]);
           idList.erase(id);
         }
+        for (int i = 0; i < population->Get_genMaxPopulation()/2; i++) {
+          Place place;
+          availablePlaces.push_back(place);
+          availablePlacesIndex.push_back(i);
+        }
+        for (auto id : idList) {
+          int randomPosition = RNG->GetRandomInt(0, availablePlacesIndex.size());
+          Place randomPlace = availablePlaces[availablePlacesIndex[randomPosition]];
+          randomPlace.Add_Index(id);
+          if (randomPlace.isFull()) {
+            // Eliminare l'indice del luogo se è pieno
+          }
+        }
         // Settare i luoghi casualmente
         // Interazione
         // Carica i dati su data
