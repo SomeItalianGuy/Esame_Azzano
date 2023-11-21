@@ -91,6 +91,14 @@ void Population::Generate_individual(Behavior behavior) {
   }
 }
 
+void Population::Generate_individual(int parent_Id) {
+  group_.insert(std::make_pair(NextId, Individual(group_[parent_Id].GetBehavior())));
+  ++NextId;
+  if (NextId == INT32_MAX) {
+    throw std::range_error("NextId has reached the limit for integer values");
+  }
+}
+
 void Population::Kill_individual(int Individual_Id) {
   group_.erase(Individual_Id);
 }

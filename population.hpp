@@ -57,6 +57,7 @@ class Population {
   double Get_reproductionRate() const;
   // // Miscellaneous
   void Generate_individual(Behavior behavior);
+  void Generate_individual(int parent_Id);
   void Kill_individual(int Individual_Id);
   void Calculate_currentPercentage();
   void Interaction(Place& place);
