@@ -8,6 +8,7 @@
 #include "rnghelper.hpp"
 
 int main() {
+  try {
   int passiveNumber = -1;
   int aggressiveNumber = -1;
   int adaptableNumber = -1;
@@ -41,7 +42,7 @@ int main() {
          "parameters for your personal simulation.\n"
 
       << "Please input a seed, it can be a character, a word, a "
-         "sentence or a number:\n";
+         "sentence or a number: ";
   std::cout << '\n';
   std::cin >> userStringInput;
   std::shared_ptr<RNGHelper> RNG = RNGHelper::instance(userStringInput);
@@ -49,8 +50,7 @@ int main() {
 
   while (passiveNumber < 0) {
     std::cout
-        << "Please input the number of Passive individuals you would like : "
-        << '\n';
+        << "Please input the number of Passive individuals you would like: ";
     bool is_failing = !(std::cin >> passiveNumber);
     if (passiveNumber < 0) {
       std::cout << '\n';
@@ -68,8 +68,7 @@ int main() {
   std::cout << '\n';
   while (aggressiveNumber < 0) {
     std::cout << "Please input the number of Aggressive individuals "
-                 "you would like:\n"
-              << '\n';
+                 "you would like: ";
     bool is_failing = !(std::cin >> aggressiveNumber);
     if (aggressiveNumber < 0) {
       std::cout << '\n';
@@ -89,8 +88,7 @@ int main() {
   std::cout << '\n';
   while (adaptableNumber < 0) {
     std::cout << "Please input the number of Adaptable individuals "
-                 "indviduals you would like:\n"
-              << '\n';
+                 "indviduals you would like: ";
     bool is_failing = !(std::cin >> adaptableNumber);
     if (adaptableNumber < 0) {
       std::cout << '\n';
@@ -123,21 +121,30 @@ int main() {
     population->Generate_individual(Behavior::Adaptable);
   }
 
-  try {
-    // std::cout << '\n';
-    // std::cout << "Now we are set to go, here is a list of all the helpful "
-    //              "commands :\n "
-    //           << "-r          : lets you run a number of generations, prints
-    //           "
-    //              "the number of individuals for each behavior;\n"
-    //           << "-q          : lets you quit the simulation.\n"
-    //           << '\n';
+  std::vector<Place> availablePlaces;
+  std::vector<int> availablePlacesIndex;
+  std::vector<GenerationData> simulatioData;
 
-    // char input;
-    // std::cout << "What would you like to do?\n";
-    // std::cout << '\n';
-    // while (std::cin >> input) {
-    // }
+  simulatioData.push_back(population->WriteTo_GenerationData());
+
+    std::cout << '\n';
+    std::cout << "Now we are set to go, here is a list of all the possible "
+                 "commands:\n "
+              << "-run [value]          : lets you run a number equal to value of generations, for each generation prints"
+                 "the number of individuals for each behavior;\n"
+              << "-q          : lets you quit the simulation.\n"
+              << '\n';
+    int userIntInput;
+
+    std::cout << "What would you like to do?\n";
+    std::cout << '\n';
+    while (std::cin >> userStringInput) {
+      if(std::cin.peek() == '\n') {
+        userIntInput = 0;
+      } else {
+        std::cin >> userIntInput;
+      }
+    }
   } catch (std::range_error& error) {
     std::cout << error.what() << '\n';
   } catch (std::overflow_error& error) {
