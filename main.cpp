@@ -147,14 +147,14 @@ int main() {
         std::cin >> userIntInput;
       }
       if (userStringInput == "run") {
+        for(int i = 0; i < userIntInput; i++) {
         population->Get_Id_list(idList);
         population->Calculate_currentPercentage();
         while (population->Size() > population->Get_genMaxPopulation()) {
-          // Riguarda quest parte che è sbagliata
-          int randomId = RNG->GetRandomInt(0, idList.size() - 1); // <- l'errore è qui
-          auto id = idList.begin() + randomId;// <- l'errore è qui
+          int randomId = RNG->GetRandomInt(0, idList.size() - 1);
+          auto id = idList.begin() + randomId;
           population->Kill_individual(idList[randomId]);
-          idList.erase(id);// <- l'errore è qui
+          idList.erase(id);
         }
         for (int i = 0; i < population->Get_genMaxPopulation()/2; i++) {
           Place place;
@@ -162,16 +162,17 @@ int main() {
           availablePlacesIndex.push_back(i);
         }
         for (auto id : idList) {
-          int randomPosition = RNG->GetRandomInt(0, availablePlacesIndex.size());
+          int randomPosition = RNG->GetRandomInt(0, availablePlacesIndex.size() - 1);
           Place randomPlace = availablePlaces[availablePlacesIndex[randomPosition]];
           randomPlace.Add_Index(id);
           if (randomPlace.isFull()) {
-            // Eliminare l'indice del luogo se è pieno
+            std::vector<int>::iterator placeId = availablePlacesIndex.begin() + randomPosition;
+            availablePlacesIndex.erase(placeId);
           }
         }
-        // Settare i luoghi casualmente
         // Interazione
         // Carica i dati su data
+        }
       } else if (userStringInput == "quit") {
         break;
       } else {
