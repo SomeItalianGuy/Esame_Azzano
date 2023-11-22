@@ -66,7 +66,7 @@ int Population::NextId = 0;
 
 // Getters
 
-void Population::Get_Id_list(std::vector<int>& namesList) const {
+void Population::Get_IdList(std::vector<int>& namesList) const {
   for (auto& entity : group_) {
     namesList.push_back(entity.first);
   }
@@ -80,6 +80,10 @@ int Population::Get_genMaxPopulation() const {
 
 double Population::Get_reproductionRate() const { return reproductionRate_; }
 
+double Population::Get_IndividualFood(int Individual_id) {
+  return group_[Individual_id].GetFood();
+}
+
 // Miscellaneous
 
 void Population::Generate_individual(Behavior behavior) {
@@ -92,11 +96,7 @@ void Population::Generate_individual(Behavior behavior) {
 }
 
 void Population::Generate_individual(int parent_Id) {
-  group_.insert(std::make_pair(NextId, Individual(group_[parent_Id].GetBehavior())));
-  ++NextId;
-  if (NextId == INT32_MAX) {
-    throw std::range_error("NextId has reached the limit for integer values");
-  }
+  Generate_individual(group_[parent_Id].GetBehavior());
 }
 
 void Population::Kill_individual(int Individual_Id) {
@@ -163,13 +163,15 @@ void Population::Interaction(Place& place) {
         group_[place.firstIndex_].SetFood(1.);
         group_[place.secondIndex_].SetFood(1.);
         return;
-      } else {
-        std::cout << "Unknown type of behavior\n";
       }
+    } else {
+      std::cout << "Unknown type of behavior\n";
     }
   } else if (place.isHalfFull()) {
     group_[place.firstIndex_].SetFood(2);
+  } else {
   }
+  // Per il caso di default (luogo vuoto) non deve succedere nulla
 }
 
 GenerationData Population::WriteTo_GenerationData() {
@@ -233,6 +235,4 @@ void Population::SaveSimulationToFile(std::vector<GenerationData> const& data,
   }
 }
 
-int Population::Size() {
-  return group_.size();
-}
+int Population::Size() { return group_.size(); }

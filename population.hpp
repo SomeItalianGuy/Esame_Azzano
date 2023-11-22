@@ -51,10 +51,11 @@ class Population {
       double startingPercentage);
   // Methods
   // // Getters
-  void Get_Id_list(std::vector<int>& namesList) const;
+  void Get_IdList(std::vector<int>& namesList) const;
   int Get_maxPopulation() const;
   int Get_genMaxPopulation() const;
   double Get_reproductionRate() const;
+  double Get_IndividualFood(int Individual_id);
   // // Miscellaneous
   void Generate_individual(Behavior behavior);
   void Generate_individual(int parent_Id);
