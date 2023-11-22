@@ -7,8 +7,8 @@ Individual::Individual(Behavior new_behavior)
 
 Individual::Individual() : behavior_(Behavior::Passive) {}
 
-const double Individual::GetFood() const { return food_; }
+double Individual::GetFood() const { return food_; }
 
-const Behavior Individual::GetBehavior() const { return behavior_; }
+Behavior Individual::GetBehavior() const { return behavior_; }
 
 void Individual::SetFood(double new_food) { food_ = new_food; }

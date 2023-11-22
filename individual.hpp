@@ -13,8 +13,8 @@ class Individual {
  public:
   Individual(Behavior new_behavior);
   Individual();
-  const double GetFood() const;
-  const Behavior GetBehavior() const;
+  double GetFood() const;
+  Behavior GetBehavior() const;
   void SetFood(double new_food);
 };
 
