@@ -34,7 +34,7 @@ double RNGHelper::GetRandomDouble(double min, double max) {
 
 bool RNGHelper::probability(double chance) {
   std::uniform_real_distribution distr_(0.0, 1.0);
-  if (distr_(eng) <= chance) {
+  if (distr_(eng) < chance) {
     return true;
   } else {
     return false;
