@@ -3,7 +3,7 @@
 #include <iostream>
 
 Individual::Individual(Behavior new_behavior)
-    : behavior_(new_behavior), food_(DEFAULT_FOOD) {}
+    : food_(DEFAULT_FOOD), behavior_(new_behavior) {}
 
 Individual::Individual() : behavior_(Behavior::Passive) {}
 
