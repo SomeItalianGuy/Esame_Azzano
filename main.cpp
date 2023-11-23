@@ -157,7 +157,6 @@ int main() {
     std::cout << "What would you like to do now? ";
     std::cout << '\n';
     while (std::cin >> userStringInput) {
-      std::cout << "What would you like to do now? ";
       // Inizializzo la veriabile userIntInput
       if (std::cin.peek() == '\n') {
         userIntInput = 0;
@@ -238,6 +237,8 @@ int main() {
           availablePlaces.clear();
           availablePlacesIndex.clear();
           idList.clear();
+          std::cout << "What would you like to do now? ";
+
         }
       }
       // Comando "quit"
