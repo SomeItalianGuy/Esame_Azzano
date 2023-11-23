@@ -216,7 +216,28 @@ int main() {
             }
           }
           // Mettere i cambiamenti di questa generazione in cout
+          GenerationData genData = population->WriteTo_GenerationData();
+          double populationSize = population->Size();
+          std::cout << "-------------------------------------------------------------"
+                 "-------------------------------------------------------------"
+                 "---------------------------------\n";
+          std::cout << "At generation number " << simulatioData.size() << " , here is how the population is plit up:" << '\n';
+          std::cout << '\n';
+          std::cout << "Passive Individuals: " <<  (genData.passiveNumber/populationSize) * 100 << "%  " << genData.passiveNumber << "  " << "(" << genData.passiveNumber - simulatioData[simulatioData.size() - 1].passiveNumber << ")" << '\n';
+          std::cout << '\n';
+          std::cout << "Aggressive Individuals: " << (genData.aggressiveNumber/populationSize) * 100 << "%  " << genData.aggressiveNumber << "  " << "(" << genData.aggressiveNumber - simulatioData[simulatioData.size() - 1].aggressiveNumber << ")" << '\n';
+          std::cout << '\n';
+          std::cout << "Adaptable Individuals: " <<(genData.adaptableNumber/populationSize) * 100 << "%  " <<  genData.adaptableNumber << "  " << "(" << genData.adaptableNumber - simulatioData[simulatioData.size() - 1].adaptableNumber << ")" << '\n';
+          std::cout << '\n';
+          std::cout << "-------------------------------------------------------------"
+                 "-------------------------------------------------------------"
+                 "---------------------------------\n";
           // Carica i dati su data
+          simulatioData.push_back(genData);
+          // Pulisci tutti i vettori che devono variare da generazione a generazione
+          availablePlaces.clear();
+          availablePlacesIndex.clear();
+          idList.clear();
         }
       }
       // Comando "quit"
