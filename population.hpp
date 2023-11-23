@@ -42,7 +42,7 @@ class Population {
   const int maxPopulation_;
   double currentPercentage_;
   std::unordered_map<int, Individual> group_;
-  static int NextId;
+  static unsigned long long int NextId;
 
  public:
   // Singleton

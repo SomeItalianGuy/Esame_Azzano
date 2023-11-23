@@ -251,9 +251,11 @@ int main() {
     }
   }
   // Catch per i possibili errori
-  catch (std::range_error& error) {
+  catch (std::domain_error& error) {
+    std::cout << "Caught a domain error: ";
     std::cout << error.what() << '\n';
   } catch (std::overflow_error& error) {
+    std::cout << "Caught an overflow error: ";
     std::cout << error.what() << '\n';
   } catch (...) {
     std::cout << "Unkown error has occured" << '\n';

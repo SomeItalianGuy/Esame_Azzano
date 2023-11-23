@@ -62,7 +62,7 @@ std::shared_ptr<Population> Population::Population_instance(
 
 // Class methods
 
-int Population::NextId = 0;
+unsigned long long int Population::NextId = 0;
 
 // Getters
 
@@ -90,8 +90,8 @@ void Population::Generate_individual(Behavior behavior) {
   // group_[NextId] = Individual(behavior);
   group_.insert(std::make_pair(NextId, Individual(behavior)));
   ++NextId;
-  if (NextId == INT32_MAX) {
-    throw std::range_error("NextId has reached the limit for integer values");
+  if (NextId == UINT64_MAX) {
+    throw std::overflow_error("NextId has reached the limit for integer values");
   }
 }
 
@@ -108,7 +108,7 @@ void Population::Calculate_currentPercentage() {
       reproductionRate_ * currentPercentage_ * (1 - currentPercentage_);
 
   if (currentPercentage_ >= 1) {
-    throw std::overflow_error(
+    throw std::domain_error(
         "Current percentage is larger than 1, simulation connot continue\n");
   }
 }
