@@ -47,6 +47,7 @@ int main() {
     int passiveNumber = -1;
     int aggressiveNumber = -1;
     int adaptableNumber = -1;
+    int userIntInput;
     std::string userStringInput;
 
     // Prendo gli input  necessari per istanziare Population e RNGHelper
@@ -56,59 +57,65 @@ int main() {
     while (passiveNumber < 0) {
       std::cout
           << "Please input the number of Passive individuals you would like: ";
-      bool is_failing = !(std::cin >> passiveNumber);
-      if (passiveNumber < 0) {
+      bool is_failing = !(std::cin >> userIntInput);
+      if (userIntInput < 0) {
         std::cout << '\n';
         std::cout
             << "The number of Passive individuals must be higher than 0!\n";
       }
-      if (is_failing) {
+      else if (is_failing) {
         std::cout << '\n';
-        passiveNumber = -1;
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << "The number of Passive individuals must be a number "
                      "higher than 0!\n";
+      }
+      else {
+        passiveNumber = userIntInput;
       }
     }
     std::cout << '\n';
     while (aggressiveNumber < 0) {
       std::cout << "Please input the number of Aggressive individuals "
                    "you would like: ";
-      bool is_failing = !(std::cin >> aggressiveNumber);
-      if (aggressiveNumber < 0) {
+      bool is_failing = !(std::cin >> userIntInput);
+      if (userIntInput < 0) {
         std::cout << '\n';
         std::cout << "The number of Aggressive individuals must "
                      "be higher than 0!\n";
       }
-      if (is_failing) {
+      else if (is_failing) {
         std::cout << '\n';
         std::cout << "The number of Aggressive individuals must "
                      "be a number "
                      "higher than 0!\n";
-        aggressiveNumber = -1;
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      }
+      else {
+        aggressiveNumber = userIntInput;
       }
     }
     std::cout << '\n';
     while (adaptableNumber < 0) {
       std::cout << "Please input the number of Adaptable individuals "
                    "indviduals you would like: ";
-      bool is_failing = !(std::cin >> adaptableNumber);
-      if (adaptableNumber < 0) {
+      bool is_failing = !(std::cin >> userIntInput);
+      if (userIntInput < 0) {
         std::cout << '\n';
         std::cout << "The number of Adaptable individuals must "
                      "be higher than 0!\n";
       }
-      if (is_failing) {
+      else if (is_failing) {
         std::cout << '\n';
         std::cout << "The number of Adaptable individuals must "
                      "be a number "
                      "higher than 0!\n";
-        adaptableNumber = -1;
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      }
+      else {
+        adaptableNumber = userIntInput;
       }
     }
 
@@ -139,6 +146,10 @@ int main() {
     // Salvo la prima generazione sul vettore di GenerationData
     simulatioData.push_back(population->WriteTo_GenerationData());
 
+    std::cout << "Population: " << population->Size() << '\n';
+    std::cout << "Reproduction rate: " << population->Get_reproductionRate() << '\n';
+
+
     // Messaggi per spiegare i due comandi disponibili durante la simulazione
     std::cout << '\n';
     std::cout << "Now we are set to go, here is a list of all the possible "
@@ -149,9 +160,6 @@ int main() {
               << "-quit                 : lets you quit the simulation.\n"
               << '\n';
 
-    // Creo una variabile intera che servirà insieme alla variabile stringa che
-    // ho creato prima
-    int userIntInput;
 
     // Inizio della fase centrale della simulazione
     std::cout << "What would you like to do now? ";
@@ -169,6 +177,7 @@ int main() {
           // Set-up per la generazione
           population->Get_IdList(idList);
           population->Calculate_currentPercentage();
+          std::cout << "Max population: " << population->Get_genMaxPopulation() << '\n';
           // Mi assicuro che la popolazione non superi il valore massimo
           while (population->Size() > population->Get_genMaxPopulation()) {
             int randomId = RNG->GetRandomInt(0, idList.size() - 1);
@@ -200,27 +209,25 @@ int main() {
           for (auto& place : availablePlaces) {
             population->Interaction(place);
           }
-          // Calcolo della sopravvivenza degli individui
-          for (std::vector<int>::iterator id = idList.begin();
-               id != idList.end(); id++) {
-            if (!RNG->probability(population->Get_IndividualFood(*id))) {
-              population->Kill_individual(*id);
-              idList.erase(id);
+          // Calcolo della sopravvivenza ed eventuale riproduzione degli individui
+
+          for (std::vector<int>::size_type i = 0; i < idList.size(); i++) {
+            if(!RNG->probability(population->Get_IndividualFood(idList[i]))) {
+              auto it = idList.begin() + i;
+              population->Kill_individual(idList[i]);
+              idList.erase(it);
+            } else if (RNG->probability(population->Get_IndividualFood(idList[i]) - 1)){
+              population->Generate_individual(idList[i]);
             }
           }
-          // Calcolo della riproduzione degli individui
-          for (auto& id : idList) {
-            if (RNG->probability(population->Get_IndividualFood(id) - 1)) {
-              population->Generate_individual(id);
-            }
-          }
+          
           // Mettere i cambiamenti di questa generazione in cout
           GenerationData genData = population->WriteTo_GenerationData();
           double populationSize = population->Size();
           std::cout << "-------------------------------------------------------------"
                  "-------------------------------------------------------------"
                  "---------------------------------\n";
-          std::cout << "At generation number " << simulatioData.size() << " , here is how the population is plit up:" << '\n';
+          std::cout << "At generation number " << simulatioData.size() << " , here is how the population is split up:" << '\n';
           std::cout << '\n';
           std::cout << "Passive Individuals: " <<  (genData.passiveNumber/populationSize) * 100 << "%  " << genData.passiveNumber << "  " << "(" << genData.passiveNumber - simulatioData[simulatioData.size() - 1].passiveNumber << ")" << '\n';
           std::cout << '\n';
