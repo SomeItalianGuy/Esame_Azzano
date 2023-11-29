@@ -229,11 +229,11 @@ int main() {
                  "---------------------------------\n";
           std::cout << "At generation number " << simulatioData.size() << " , here is how the population is split up:" << '\n';
           std::cout << '\n';
-          std::cout << "Passive Individuals: " <<  (genData.passiveNumber/populationSize) * 100 << "%  " << genData.passiveNumber << "  " << "(" << genData.passiveNumber - simulatioData[simulatioData.size() - 1].passiveNumber << ")" << '\n';
+          std::cout << "Passive Individuals: " <<  genData.GetPassivePercentage() << "%  " << genData.passiveNumber << "  " << "(" << genData.passiveNumber - simulatioData[simulatioData.size() - 1].passiveNumber << ")" << '\n';
           std::cout << '\n';
-          std::cout << "Aggressive Individuals: " << (genData.aggressiveNumber/populationSize) * 100 << "%  " << genData.aggressiveNumber << "  " << "(" << genData.aggressiveNumber - simulatioData[simulatioData.size() - 1].aggressiveNumber << ")" << '\n';
+          std::cout << "Aggressive Individuals: " << genData.GetAggressivePercentage() << "%  " << genData.aggressiveNumber << "  " << "(" << genData.aggressiveNumber - simulatioData[simulatioData.size() - 1].aggressiveNumber << ")" << '\n';
           std::cout << '\n';
-          std::cout << "Adaptable Individuals: " <<(genData.adaptableNumber/populationSize) * 100 << "%  " <<  genData.adaptableNumber << "  " << "(" << genData.adaptableNumber - simulatioData[simulatioData.size() - 1].adaptableNumber << ")" << '\n';
+          std::cout << "Adaptable Individuals: " << genData.GetAdaptablePercentage() << "%  " <<  genData.adaptableNumber << "  " << "(" << genData.adaptableNumber - simulatioData[simulatioData.size() - 1].adaptableNumber << ")" << '\n';
           std::cout << '\n';
           std::cout << "-------------------------------------------------------------"
                  "-------------------------------------------------------------"

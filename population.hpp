@@ -26,6 +26,9 @@ struct Place {
 struct GenerationData {
   int passiveNumber, aggressiveNumber, adaptableNumber;
   GenerationData();
+  double GetPassivePercentage();
+  double GetAggressivePercentage();
+  double GetAdaptablePercentage();
 };
 
 class Population {

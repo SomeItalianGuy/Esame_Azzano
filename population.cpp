@@ -46,6 +46,16 @@ bool Place::isHalfFull() {
 GenerationData::GenerationData()
     : passiveNumber(0), aggressiveNumber(0), adaptableNumber(0) {}
 
+double GenerationData::GetPassivePercentage() {
+  return (passiveNumber/(passiveNumber + aggressiveNumber + adaptableNumber)) * 100;
+}
+double GenerationData::GetAggressivePercentage() {
+  return (aggressiveNumber/(passiveNumber + aggressiveNumber + adaptableNumber)) * 100;
+}
+double GenerationData::GetAdaptablePercentage() {
+  return (adaptableNumber/(passiveNumber + aggressiveNumber + adaptableNumber)) * 100;
+}
+
 // Singleton Class
 
 std::shared_ptr<Population> Population::population_ptr;
