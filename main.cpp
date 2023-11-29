@@ -2,10 +2,15 @@
 #include <limits>
 #include <random>
 #include <sstream>
+#include <iomanip>
 
 #include "individual.hpp"
 #include "population.hpp"
 #include "rnghelper.hpp"
+
+#define PASSIVE "\033[1;34mPassive\033[0m"
+#define AGGRESSIVE "\033[1;33mAggressive\033[0m"
+#define ADAPTABLE "\033[1;35mAdaptable\033[0m"
 
 int main() {
   try {
@@ -20,14 +25,14 @@ int main() {
         << "in this simulation we recognize three types of behaviors:\n"
         << '\n'
 
-        << "-Passive :    tries to divide food equally with its bretheren;\n"
+        << "-" << PASSIVE << " :    tries to divide food equally with its bretheren;\n"
         << '\n'
 
-        << "-Aggressive : will try to steal most of the food it finds "
+        << "-" << AGGRESSIVE <<  " : will try to steal most of the food it finds "
            "but gets exhasted when it has to compete;\n"
         << '\n'
 
-        << "-Adaptable :  it will give most of the food if it encounters "
+        << "-" << ADAPTABLE << " :  it will give most of the food if it encounters "
            "a Passive individual,\n"
         << "              but will not tolerate Aggressive individuals.\n"
         << '\n'
@@ -56,18 +61,18 @@ int main() {
 
     while (passiveNumber < 0) {
       std::cout
-          << "Please input the number of Passive individuals you would like: ";
+          << "Please input the number of " << PASSIVE << " individuals you would like: ";
       bool is_failing = !(std::cin >> userIntInput);
       if (userIntInput < 0) {
         std::cout << '\n';
         std::cout
-            << "The number of Passive individuals must be higher than 0!\n";
+            << "The number of "<< PASSIVE << " individuals must be higher than 0!\n";
       }
       else if (is_failing) {
         std::cout << '\n';
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "The number of Passive individuals must be a number "
+        std::cout << "The number of " << PASSIVE << " individuals must be a number "
                      "higher than 0!\n";
       }
       else {
@@ -76,17 +81,17 @@ int main() {
     }
     std::cout << '\n';
     while (aggressiveNumber < 0) {
-      std::cout << "Please input the number of Aggressive individuals "
+      std::cout << "Please input the number of " << AGGRESSIVE << " individuals "
                    "you would like: ";
       bool is_failing = !(std::cin >> userIntInput);
       if (userIntInput < 0) {
         std::cout << '\n';
-        std::cout << "The number of Aggressive individuals must "
+        std::cout << "The number of " << AGGRESSIVE << " individuals must "
                      "be higher than 0!\n";
       }
       else if (is_failing) {
         std::cout << '\n';
-        std::cout << "The number of Aggressive individuals must "
+        std::cout << "The number of " << AGGRESSIVE << " individuals must "
                      "be a number "
                      "higher than 0!\n";
         std::cin.clear();
@@ -98,17 +103,17 @@ int main() {
     }
     std::cout << '\n';
     while (adaptableNumber < 0) {
-      std::cout << "Please input the number of Adaptable individuals "
+      std::cout << "Please input the number of " << ADAPTABLE << " individuals "
                    "indviduals you would like: ";
       bool is_failing = !(std::cin >> userIntInput);
       if (userIntInput < 0) {
         std::cout << '\n';
-        std::cout << "The number of Adaptable individuals must "
+        std::cout << "The number of " << ADAPTABLE << " individuals must "
                      "be higher than 0!\n";
       }
       else if (is_failing) {
         std::cout << '\n';
-        std::cout << "The number of Adaptable individuals must "
+        std::cout << "The number of " << ADAPTABLE << " individuals must "
                      "be a number "
                      "higher than 0!\n";
         std::cin.clear();
@@ -143,6 +148,9 @@ int main() {
     std::vector<int> idList;
     std::vector<GenerationData> simulatioData;
 
+    // Creo una variabile booleana che mi servirà più avanti
+    bool isExtinct = population->Size() == 0 ? true : false;
+
     // Salvo la prima generazione sul vettore di GenerationData
     simulatioData.push_back(population->WriteTo_GenerationData());
 
@@ -163,8 +171,7 @@ int main() {
 
     // Inizio della fase centrale della simulazione
     std::cout << "What would you like to do now? ";
-    std::cout << '\n';
-    while (std::cin >> userStringInput) {
+    while (!isExtinct && std::cin >> userStringInput) {
       // Inizializzo la veriabile userIntInput
       if (std::cin.peek() == '\n') {
         userIntInput = 0;
@@ -220,20 +227,29 @@ int main() {
               population->Generate_individual(idList[i]);
             }
           }
+
+          if(population->Size() == 0) {
+            std::cout << "The population was led to extinction!" << '\n';
+            std::cout << "Successfully exited the simulation" << '\n';
+            isExtinct = true;
+            break;
+          } else {
           
           // Mettere i cambiamenti di questa generazione in cout
           GenerationData genData = population->WriteTo_GenerationData();
-          double populationSize = population->Size();
+          std::string passiveNumberOutput = (genData.passiveNumber - simulatioData[simulatioData.size() - 1].passiveNumber) < 0 ? std::string("(\033[1;31m") + std::to_string((genData.passiveNumber - simulatioData[simulatioData.size() - 1].passiveNumber)) + std::string("\033[0m)") : std::string("(\033[1;32m+") + std::to_string((genData.passiveNumber - simulatioData[simulatioData.size() - 1].passiveNumber)) + std::string("\033[0m)");
+          std::string aggerssiveNumberOutput = (genData.aggressiveNumber - simulatioData[simulatioData.size() - 1].aggressiveNumber) < 0 ? std::string("(\033[1;31m") + std::to_string((genData.aggressiveNumber - simulatioData[simulatioData.size() - 1].aggressiveNumber)) + std::string("\033[0m)") : std::string("(\033[1;32m+") + std::to_string((genData.aggressiveNumber - simulatioData[simulatioData.size() - 1].aggressiveNumber)) + std::string("\033[0m)");
+          std::string adaptableNumberOutput = (genData.adaptableNumber - simulatioData[simulatioData.size() - 1].adaptableNumber) < 0 ? std::string("(\033[1;31m") + std::to_string((genData.adaptableNumber - simulatioData[simulatioData.size() - 1].adaptableNumber)) + std::string("\033[0m)") : std::string("(\033[1;32m+") + std::to_string((genData.adaptableNumber - simulatioData[simulatioData.size() - 1].adaptableNumber)) + std::string("\033[0m)");
           std::cout << "-------------------------------------------------------------"
                  "-------------------------------------------------------------"
                  "---------------------------------\n";
           std::cout << "At generation number " << simulatioData.size() << " , here is how the population is split up:" << '\n';
           std::cout << '\n';
-          std::cout << "Passive Individuals: " <<  genData.GetPassivePercentage() << "%  " << genData.passiveNumber << "  " << "(" << genData.passiveNumber - simulatioData[simulatioData.size() - 1].passiveNumber << ")" << '\n';
+          std::cout << PASSIVE <<" Individuals: "  << std::fixed << std::setprecision(2) << genData.GetPassivePercentage() << "%  " << genData.passiveNumber << "  " << passiveNumberOutput << '\n';
           std::cout << '\n';
-          std::cout << "Aggressive Individuals: " << genData.GetAggressivePercentage() << "%  " << genData.aggressiveNumber << "  " << "(" << genData.aggressiveNumber - simulatioData[simulatioData.size() - 1].aggressiveNumber << ")" << '\n';
+          std::cout << AGGRESSIVE << " Individuals: "  << std::fixed << std::setprecision(2) << genData.GetAggressivePercentage() << "%  " << genData.aggressiveNumber << "  " << aggerssiveNumberOutput << '\n';
           std::cout << '\n';
-          std::cout << "Adaptable Individuals: " << genData.GetAdaptablePercentage() << "%  " <<  genData.adaptableNumber << "  " << "(" << genData.adaptableNumber - simulatioData[simulatioData.size() - 1].adaptableNumber << ")" << '\n';
+          std::cout << ADAPTABLE << " Individuals: " << std::fixed << std::setprecision(2) << genData.GetAdaptablePercentage() << "%  " <<  genData.adaptableNumber << "  " << adaptableNumberOutput << '\n';
           std::cout << '\n';
           std::cout << "-------------------------------------------------------------"
                  "-------------------------------------------------------------"
@@ -244,17 +260,21 @@ int main() {
           availablePlaces.clear();
           availablePlacesIndex.clear();
           idList.clear();
+          if(i == userIntInput - 1) {
           std::cout << "What would you like to do now? ";
-
+          }
+          }
         }
       }
       // Comando "quit"
       else if (userStringInput == "quit") {
+        std::cout << "Successfully exited the simulation" << '\n';
         break;
       }
       // Comando non valido
       else {
         std::cout << "Invalid command, try one of the two valid commands\n";
+        std::cout << "What would you like to do now? ";
       }
     }
   }
