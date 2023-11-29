@@ -50,7 +50,7 @@ double GenerationData::GetPassivePercentage() {
   return (passiveNumber/(passiveNumber + aggressiveNumber + adaptableNumber)) * 100;
 }
 double GenerationData::GetAggressivePercentage() {
-  return (aggressiveNumber/(passiveNumber + aggressiveNumber + adaptableNumber)) * 100;
+  return (double(aggressiveNumber)/(passiveNumber + aggressiveNumber + adaptableNumber)) * 100;
 }
 double GenerationData::GetAdaptablePercentage() {
   return (adaptableNumber/(passiveNumber + aggressiveNumber + adaptableNumber)) * 100;
