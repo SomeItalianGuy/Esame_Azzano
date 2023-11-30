@@ -230,7 +230,6 @@ int main() {
 
           if(population->Size() == 0) {
             std::cout << "The population was led to extinction!" << '\n';
-            std::cout << "Successfully exited the simulation" << '\n';
             isExtinct = true;
             break;
           } else {
@@ -268,7 +267,6 @@ int main() {
       }
       // Comando "quit"
       else if (userStringInput == "quit") {
-        std::cout << "Successfully exited the simulation" << '\n';
         break;
       }
       // Comando non valido
@@ -277,6 +275,7 @@ int main() {
         std::cout << "What would you like to do now? ";
       }
     }
+    std::cout << "Successfully exited the simulation" << '\n';
   }
   // Catch per i possibili errori
   catch (std::domain_error& error) {
