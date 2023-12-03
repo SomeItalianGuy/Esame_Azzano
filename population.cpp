@@ -10,8 +10,10 @@ Place::Place()
 void Place::Add_Index(int newIndex) {
   if (firstIndex_ == DEFAULT_PLACE_INDEX) {
     firstIndex_ = newIndex;
+    // std::cout << "Primo indice modificato: " << firstIndex_ << '\n';
   } else if (secondIndex_ == DEFAULT_PLACE_INDEX) {
     secondIndex_ = newIndex;
+    // std::cout << "Secondo indice modificato: " << secondIndex_ << '\n';
   } else {
     std::cout << "Too many indexes in one place\n";
   }
@@ -47,13 +49,19 @@ GenerationData::GenerationData()
     : passiveNumber(0), aggressiveNumber(0), adaptableNumber(0) {}
 
 double GenerationData::GetPassivePercentage() {
-  return (double(passiveNumber)/(passiveNumber + aggressiveNumber + adaptableNumber)) * 100;
+  return (double(passiveNumber) /
+          (passiveNumber + aggressiveNumber + adaptableNumber)) *
+         100;
 }
 double GenerationData::GetAggressivePercentage() {
-  return (double(aggressiveNumber)/(passiveNumber + aggressiveNumber + adaptableNumber)) * 100;
+  return (double(aggressiveNumber) /
+          (passiveNumber + aggressiveNumber + adaptableNumber)) *
+         100;
 }
 double GenerationData::GetAdaptablePercentage() {
-  return (double(adaptableNumber)/(passiveNumber + aggressiveNumber + adaptableNumber)) * 100;
+  return (double(adaptableNumber) /
+          (passiveNumber + aggressiveNumber + adaptableNumber)) *
+         100;
 }
 
 // Singleton Class
@@ -101,7 +109,8 @@ void Population::Generate_individual(Behavior behavior) {
   group_.insert(std::make_pair(NextId, Individual(behavior)));
   ++NextId;
   if (NextId == UINT64_MAX) {
-    throw std::overflow_error("NextId has reached the limit for integer values");
+    throw std::overflow_error(
+        "NextId has reached the limit for integer values");
   }
 }
 
@@ -117,7 +126,7 @@ void Population::Calculate_currentPercentage() {
   currentPercentage_ =
       reproductionRate_ * currentPercentage_ * (1 - currentPercentage_);
 
-  if (currentPercentage_ >= 1) {
+  if (currentPercentage_ > 1 || currentPercentage_ < 0) {
     throw std::domain_error(
         "Current percentage is larger than 1, simulation connot continue\n");
   }
