@@ -4,7 +4,9 @@
 #include <random>
 #include <sstream>
 
+#include "graphic.hpp"
 #include "individual.hpp"
+#include "logical.hpp"
 #include "population.hpp"
 #include "rnghelper.hpp"
 
@@ -151,15 +153,14 @@ int main() {
     std::vector<int> idList;
     std::vector<GenerationData> simulationData;
 
-    // Creo una variabile booleana che mi servirà più avanti
     bool isExtinct = population->Size() == 0 ? true : false;
 
     // Salvo la prima generazione sul vettore di GenerationData
     simulationData.push_back(population->WriteTo_GenerationData());
 
-    std::cout << "Population: " << population->Size() << '\n';
-    std::cout << "Reproduction rate: " << population->Get_reproductionRate()
-              << '\n';
+    // std::cout << "Population: " << population->Size() << '\n';
+    // std::cout << "Reproduction rate: " << population->Get_reproductionRate()
+    //           << '\n';
 
     // Messaggi per spiegare i due comandi disponibili durante la simulazione
     std::cout << '\n';
@@ -290,13 +291,13 @@ int main() {
           // debugInt0 = 0;
           // debugInt1 = 0;
 
+          GenerationData genData = population->WriteTo_GenerationData();
           if (population->Size() == 0) {
             std::cout << "The population was led to extinction!" << '\n';
             isExtinct = true;
             break;
           } else {
             // Mettere i cambiamenti di questa generazione in cout
-            GenerationData genData = population->WriteTo_GenerationData();
             std::string passiveNumberOutput =
                 (genData.passiveNumber -
                  simulationData[simulationData.size() - 1].passiveNumber) < 0
