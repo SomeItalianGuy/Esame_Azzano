@@ -1,28 +1,28 @@
 #include "logical.hpp"
 
 namespace Logistics {
-template <typename T, unsigned int N>
-void GetValidatedInput(T& inputTovalidate, std::string inputMessage,
-                       std::array<bool, N> conditions,
-                       std::array<std::string, N> errorMessages) {
+template <typename T>
+T GetValidatedInput(std::string inputMessage,
+                    std::vector<ValidationRule<T>> rules) {
+  T validatedInput;
   while (true) {
     std::cout << inputMessage;
-    bool isCorrectInputType = (std::cin >> inputTovalidate);
+    bool isCorrectInputType = (std::cin >> validatedInput);
     if (!isCorrectInputType) {
       std::cin.clear();
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
       std::cout
           << "Could not correctly convert input type, the wanted type is: "
           << std::type_info(typeid(T)).name() << '\n';
-    } else if (N > 0) {
-      for (int i = 0; i < N; i++) {
-        if (!conditions[i]) {
-          std::cout << errorMessages[i] << '\n';
+    } else if (rules.size() > 0) {
+      for (auto rule : rules) {
+        if (!rule.m_condition(validatedInput)) {
+          std::cout << rule.m_errorMsg << '\n';
           break;
         }
       }
     } else {
-      break;
+      return validatedInput;
     }
   }
 }

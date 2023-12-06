@@ -7,17 +7,15 @@
 #define YELLOW_TEXT std::string("\033[1;33m")
 #define MAGENTA_TEXT std::string("\033[1;35m")
 
-#include <array>
 #include <iomanip>
 #include <iostream>
 #include <string>
+#include <utility>
+#include <vector>
 
 namespace Graphic {
 std::string ColorText(const std::string& text, const std::string& color);
-template <int N>
-std::string ColoredConditionString(const std::string& text,
-                                   std::array<bool, N> conditions,
-                                   std::array<std::string, N> colors);
+
 void PrintSeparationLines();
 void PrintStats(const std::string& initialText, double percentage, int integer,
                 const std::string& lastText);

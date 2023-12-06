@@ -46,52 +46,42 @@ void Simulation::SaveGenerationData() {
 }
 
 void Simulation::PrintPassiveOutput() {
+  int passiveVariation =
+      s_simulationData.back().passiveNumber -
+      s_simulationData[s_simulationData.size() - 2].passiveNumber;
   Graphic::PrintStats(
       Graphic::ColorText("Passive", BLUE_TEXT).append(" individuals: "),
       s_simulationData.back().GetPassivePercentage(),
       s_simulationData.back().passiveNumber,
-      Graphic::ColoredConditionString<2>(
-          std::to_string(
-              s_simulationData.back().passiveNumber -
-              s_simulationData[s_simulationData.size() - 2].passiveNumber),
-          {(s_simulationData.back().passiveNumber -
-            s_simulationData[s_simulationData.size() - 2].passiveNumber) > 0,
-           (s_simulationData.back().passiveNumber -
-            s_simulationData[s_simulationData.size() - 2].passiveNumber) < 0},
-          {GREEN_TEXT.append("+"), RED_TEXT}));
+      Graphic::ColorText(
+          std::to_string(passiveVariation),
+          passiveVariation > 0 ? GREEN_TEXT.append("+") : RED_TEXT));
 }
 
 void Simulation::PrintAggressiveOutput() {
+  int aggressiveVariation =
+      s_simulationData.back().aggressiveNumber -
+      s_simulationData[s_simulationData.size() - 2].aggressiveNumber;
   Graphic::PrintStats(
       Graphic::ColorText("Aggressive", YELLOW_TEXT).append(" individuals: "),
       s_simulationData.back().GetAggressivePercentage(),
       s_simulationData.back().aggressiveNumber,
-      Graphic::ColoredConditionString<2>(
-          std::to_string(
-              s_simulationData.back().aggressiveNumber -
-              s_simulationData[s_simulationData.size() - 2].aggressiveNumber),
-          {(s_simulationData.back().aggressiveNumber -
-            s_simulationData[s_simulationData.size() - 2].aggressiveNumber) > 0,
-           (s_simulationData.back().aggressiveNumber -
-            s_simulationData[s_simulationData.size() - 2].aggressiveNumber) <
-               0},
-          {GREEN_TEXT.append("+"), RED_TEXT}));
+      Graphic::ColorText(
+          std::to_string(aggressiveVariation),
+          aggressiveVariation > 0 ? GREEN_TEXT.append("+") : RED_TEXT));
 }
 
 void Simulation::PrintAdaptableOutput() {
+  int adaptableVariation =
+      s_simulationData.back().adaptableNumber -
+      s_simulationData[s_simulationData.size() - 2].adaptableNumber;
   Graphic::PrintStats(
       Graphic::ColorText("Adaptable", MAGENTA_TEXT).append(" individuals: "),
       s_simulationData.back().GetPassivePercentage(),
       s_simulationData.back().adaptableNumber,
-      Graphic::ColoredConditionString<2>(
-          std::to_string(
-              s_simulationData.back().adaptableNumber -
-              s_simulationData[s_simulationData.size() - 2].adaptableNumber),
-          {(s_simulationData.back().adaptableNumber -
-            s_simulationData[s_simulationData.size() - 2].adaptableNumber) > 0,
-           (s_simulationData.back().adaptableNumber -
-            s_simulationData[s_simulationData.size() - 2].adaptableNumber) < 0},
-          {GREEN_TEXT.append("+"), RED_TEXT}));
+      Graphic::ColorText(
+          std::to_string(adaptableVariation),
+          adaptableVariation > 0 ? GREEN_TEXT.append("+") : RED_TEXT));
 }
 
 void Simulation::PrintGenerationResults() {
@@ -122,32 +112,28 @@ Simulation::Simulation(std::string seed, int passiveNumber,
 }
 
 std::shared_ptr<Simulation> Simulation::GetSimulationFromInput() {
-  std::string seed;
-  Logistics::GetValidatedInput<std::string, 0>(
-      seed,
-      std::string(
-          "Please input the seed of this simulation, it can be a number, a "
-          "sentence or just a character: "),
-      {}, {});
-  int passiveNumber, aggressiveNumber, adaptableNumber;
-  Logistics::GetValidatedInput<int, 1>(
-      passiveNumber,
+  auto seed = Logistics::GetValidatedInput<std::string>(
+      "Please input the seed of this simulation, it can be a number, a "
+      "sentence or just a character: ",
+      {{[](std::string str) {
+          (void)str;  // Per evitare warning
+          return true;
+        },
+        ""}});
+  int passiveNumber = Logistics::GetValidatedInput<int>(
       Graphic::AskForPopulationInput(std::string("Passive"), BLUE_TEXT),
-      {passiveNumber >= 0},
-      {std::string("The input number must be more than 0")});
-  Logistics::GetValidatedInput<int, 1>(
-      aggressiveNumber,
+      {{[](int numberToValidate) { return numberToValidate > 0; },
+        "The passive number connot be less than 0"}});
+  int aggressiveNumber = Logistics::GetValidatedInput<int>(
       Graphic::AskForPopulationInput(std::string("Aggressive"), YELLOW_TEXT),
-      {aggressiveNumber >= 0},
-      {std::string("The input number must be more than 0")});
-  Logistics::GetValidatedInput<int, 1>(
-      adaptableNumber,
+      {{[](int numberToValidate) { return numberToValidate > 0; },
+        "The aggressive number connot be less than 0"}});
+  int adaptableNumber = Logistics::GetValidatedInput<int>(
       Graphic::AskForPopulationInput(std::string("Adaptable"), MAGENTA_TEXT),
-      {adaptableNumber >= 0},
-      {std::string("The input number must be more than 0")});
-  std::shared_ptr<Simulation> simulation(
+      {{[](int numberToValidate) { return numberToValidate > 0; },
+        "The adaptable number connot be less than 0"}});
+  return std::shared_ptr<Simulation>(
       new Simulation(seed, passiveNumber, aggressiveNumber, adaptableNumber));
-  return simulation;
 }
 
 bool Simulation::PopulationIsExtinct() {
