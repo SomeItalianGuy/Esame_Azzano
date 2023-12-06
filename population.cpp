@@ -48,20 +48,27 @@ bool Place::isHalfFull() {
 GenerationData::GenerationData()
     : passiveNumber(0), aggressiveNumber(0), adaptableNumber(0) {}
 
+int GenerationData::GetTotalPopulation() {
+  return passiveNumber + aggressiveNumber + adaptableNumber;
+}
+
 double GenerationData::GetPassivePercentage() {
-  return (double(passiveNumber) /
-          (passiveNumber + aggressiveNumber + adaptableNumber)) *
-         100;
+  if (GetTotalPopulation() == 0) {
+    return 0;
+  }
+  return (double(passiveNumber) / (GetTotalPopulation())) * 100;
 }
 double GenerationData::GetAggressivePercentage() {
-  return (double(aggressiveNumber) /
-          (passiveNumber + aggressiveNumber + adaptableNumber)) *
-         100;
+  if (GetTotalPopulation() == 0) {
+    return 0;
+  }
+  return (double(aggressiveNumber) / (GetTotalPopulation())) * 100;
 }
 double GenerationData::GetAdaptablePercentage() {
-  return (double(adaptableNumber) /
-          (passiveNumber + aggressiveNumber + adaptableNumber)) *
-         100;
+  if (GetTotalPopulation() == 0) {
+    return 0;
+  }
+  return (double(adaptableNumber) / (GetTotalPopulation())) * 100;
 }
 
 // Singleton Class
@@ -104,18 +111,20 @@ double Population::Get_IndividualFood(int Individual_id) {
 
 // Miscellaneous
 
-void Population::Generate_individual(Behavior behavior) {
+void Population::Generate_individual(int number, Behavior behavior) {
   // group_[NextId] = Individual(behavior);
-  group_.insert(std::make_pair(NextId, Individual(behavior)));
-  ++NextId;
-  if (NextId == UINT64_MAX) {
-    throw std::overflow_error(
-        "NextId has reached the limit for integer values");
+  for (int i = 0; i < number; i++) {
+    group_.insert(std::make_pair(NextId, Individual(behavior)));
+    ++NextId;
+    if (NextId == UINT64_MAX) {
+      throw std::overflow_error(
+          "NextId has reached the limit for integer values");
+    }
   }
 }
 
-void Population::Generate_individual(int parent_Id) {
-  Generate_individual(group_[parent_Id].GetBehavior());
+void Population::Generate_individual(int number, int parent_Id) {
+  Generate_individual(number, group_[parent_Id].GetBehavior());
 }
 
 void Population::Kill_individual(int Individual_Id) {

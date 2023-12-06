@@ -26,6 +26,7 @@ struct Place {
 struct GenerationData {
   int passiveNumber, aggressiveNumber, adaptableNumber;
   GenerationData();
+  int GetTotalPopulation();
   double GetPassivePercentage();
   double GetAggressivePercentage();
   double GetAdaptablePercentage();
@@ -60,8 +61,8 @@ class Population {
   double Get_reproductionRate() const;
   double Get_IndividualFood(int Individual_id);
   // // Miscellaneous
-  void Generate_individual(Behavior behavior);
-  void Generate_individual(int parent_Id);
+  void Generate_individual(int number, Behavior behavior);
+  void Generate_individual(int number, int parent_Id);
   void Kill_individual(int Individual_Id);
   void Calculate_currentPercentage();
   void Interaction(Place& place);

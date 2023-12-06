@@ -1,17 +1,18 @@
 #include "graphic.hpp"
 
-namespace Simulation {
-
-namespace graphic {
-template <class T>
-std::string ColorText(std::string& text, T color) {
+namespace Graphic {
+std::string ColorText(const std::string& text, const std::string& color) {
   return color + text + "\033[0m";
 }
-template <class T>
-std::string ColoredConditionString(std::string& text, bool& condition,
-                                   T firstColor, T secondColor) {
-  return condition ? ColorText<T>(text, firstColor)
-                   : ColorText<T>(text, secondColor)
+template <int N>
+std::string ColoredConditionString(const std::string& text,
+                                   std::array<bool, N> conditions,
+                                   std::array<std::string, N> colors) {
+  for (int i = 0; i < N; i++) {
+    if (conditions[i]) {
+      return ColorText(text, colors[i]);
+    }
+  }
 }
 
 void PrintSeparationLines() {
@@ -22,11 +23,16 @@ void PrintSeparationLines() {
                "---------------------------------\n";
 }
 
-void PrintStats(std::string& initialText, double percentage, int integer,
-                std::string& lastText) {
+void PrintStats(const std::string& initialText, double percentage, int integer,
+                const std::string& lastText) {
   std::cout << initialText << std::fixed << std::setprecision(2) << percentage
             << "%  " << integer << "  (" << lastText << ')\n';
   std::cout << '\n';
 }
-}  // namespace graphic
-}  // namespace Simulation
+std::string AskForPopulationInput(const std::string& textToColor,
+                                  const std::string& color) {
+  return std::string("Please input the number of ") +
+         ColorText(textToColor, color) +
+         std::string("individuals you would like: ");
+}
+}  // namespace Graphic
