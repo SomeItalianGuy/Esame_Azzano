@@ -20,9 +20,6 @@ template <class T>
 void InitializeVectorAndIndex(std::vector<T>& vector, std::vector<int>& indexes,
                               int nSamples);
 
-void PrintGenerationResults(std::shared_ptr<Population>& population,
-                            GenerationData& currentGenerationData,
-                            GenerationData& previousGenerationData);
 }  // namespace Logistics
 
 #endif

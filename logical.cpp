@@ -13,7 +13,7 @@ void GetValidatedInput(T& inputTovalidate, std::string inputMessage,
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
       std::cout
           << "Could not correctly convert input type, the wanted type is: "
-          << std::type_info(typeid(T)) << '\n';
+          << std::type_info(typeid(T)).name() << '\n';
     } else if (N > 0) {
       for (int i = 0; i < N; i++) {
         if (!conditions[i]) {
@@ -40,7 +40,4 @@ void InitializeVectorAndIndex(std::vector<T>& vector, std::vector<int>& indexes,
   }
 }
 
-void PrintGenerationResults(std::shared_ptr<Population>& population,
-                            GenerationData& currentGenerationData,
-                            GenerationData& previousGenerationData) {}
 }  // namespace Logistics

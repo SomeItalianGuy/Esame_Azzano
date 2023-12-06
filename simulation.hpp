@@ -9,8 +9,8 @@
 
 class Simulation {
  private:
-  std::shared_ptr<Population> s_population;
   std::shared_ptr<RNGHelper> s_RNG;
+  std::shared_ptr<Population> s_population;
   std::vector<int> s_idList, s_availablePlacesIndex;
   std::vector<Place> s_availablePlaces;
   std::vector<GenerationData> s_simulationData;
@@ -27,7 +27,7 @@ class Simulation {
   Simulation(std::string seed, int passiveNumber, int aggressiveNumber,
              int adaptableNumber);
   static std::shared_ptr<Simulation> GetSimulationFromInput();
-  bool PopulationIsExtinct() const;
+  bool PopulationIsExtinct();
   void RunGenerations(int N);
   void SaveSimulationToFile();
 };

@@ -1,5 +1,11 @@
 #include "simulation.hpp"
 
+#include "graphic.hpp"
+#include "individual.hpp"
+#include "logical.hpp"
+#include "population.hpp"
+#include "rnghelper.hpp"
+
 void Simulation::EraseRandomIndividual() {
   int randomId = s_RNG->GetRandomInt(0, s_idList.size() - 1);
   auto id = s_idList.begin() + randomId;
@@ -119,8 +125,9 @@ std::shared_ptr<Simulation> Simulation::GetSimulationFromInput() {
   std::string seed;
   Logistics::GetValidatedInput<std::string, 0>(
       seed,
-      "Please input the seed of this simulation, it can be a number, a "
-      "sentence or just a character: ",
+      std::string(
+          "Please input the seed of this simulation, it can be a number, a "
+          "sentence or just a character: "),
       {}, {});
   int passiveNumber, aggressiveNumber, adaptableNumber;
   Logistics::GetValidatedInput<int, 1>(
@@ -143,7 +150,7 @@ std::shared_ptr<Simulation> Simulation::GetSimulationFromInput() {
   return simulation;
 }
 
-bool Simulation::PopulationIsExtinct() const {
+bool Simulation::PopulationIsExtinct() {
   return s_population->Size() == 0 ? true : false;
 }
 
@@ -167,7 +174,7 @@ void Simulation::RunGenerations(int N) {
     s_availablePlaces.clear();
     s_availablePlacesIndex.clear();
     s_idList.clear();
-    if (PopulationIsExtinct) {
+    if (PopulationIsExtinct()) {
       std::cout << "Population was led to extinction" << '\n';
       break;
     }
