@@ -7,7 +7,7 @@ T GetValidatedInput(std::string inputMessage,
   T validatedInput;
   while (true) {
     std::cout << inputMessage;
-    bool isCorrectInputType = (std::cin >> validatedInput);
+    bool isCorrectInputType = (bool)(std::cin >> validatedInput);
     if (!isCorrectInputType) {
       std::cin.clear();
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -15,14 +15,17 @@ T GetValidatedInput(std::string inputMessage,
           << "Could not correctly convert input type, the wanted type is: "
           << std::type_info(typeid(T)).name() << '\n';
     } else if (rules.size() > 0) {
+      bool isValid = true;
       for (auto rule : rules) {
-        if (!rule.m_condition(validatedInput)) {
+        isValid = rule.m_condition(validatedInput);
+        if (!isValid) {
           std::cout << rule.m_errorMsg << '\n';
           break;
         }
       }
-    } else {
-      return validatedInput;
+      if (isValid) {
+        return validatedInput;
+      }
     }
   }
 }

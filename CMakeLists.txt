@@ -19,8 +19,8 @@ add_executable(main main.cpp population.cpp individual.cpp rnghelper.cpp graphic
 #-DBUILD_TESTING=OFF per disabilitare i test
 if (BUILD_TESTING)
 
-  add_executable(test main.test.cpp population.cpp individual.cpp rnghelper.cpp graphic.cpp logical.cpp simulation.cpp)
+  add_executable(main.test main.test.cpp population.cpp individual.cpp rnghelper.cpp graphic.cpp logical.cpp simulation.cpp)
 
-  add_test(NAME test COMMAND test)
+  add_test(NAME main.test COMMAND main.test)
 
 endif()
