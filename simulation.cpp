@@ -77,7 +77,7 @@ void Simulation::PrintAdaptableOutput() {
       s_simulationData[s_simulationData.size() - 2].adaptableNumber;
   Graphic::PrintStats(
       Graphic::ColorText("Adaptable", MAGENTA_TEXT).append(" individuals: "),
-      s_simulationData.back().GetPassivePercentage(),
+      s_simulationData.back().GetAdaptablePercentage(),
       s_simulationData.back().adaptableNumber,
       Graphic::ColorText(
           std::to_string(adaptableVariation),

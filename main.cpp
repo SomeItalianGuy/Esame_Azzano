@@ -72,8 +72,7 @@ int main() {
       }
       // Comando non valido
       else {
-        std::cout << "Invalid command, try one of the two valid commands\n";
-        std::cout << "What would you like to do now? ";
+        std::cout << "Invalid command, try one of the two valid commands\n \n";
       }
     }
     std::cout << "Successfully exited the simulation" << '\n';

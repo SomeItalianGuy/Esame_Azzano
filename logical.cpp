@@ -14,17 +14,18 @@ T Logic::GetValidatedInput(std::string inputMessage,
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
       std::cout
           << "Could not correctly convert input type, the wanted type is: "
-          << typeid(T).name() << '\n';
+          << typeid(T).name() << "\n \n";
     } else if (rules.size() > 0) {
       bool isValid = true;
       for (auto rule : rules) {
         isValid = rule.m_condition(validatedInput);
         if (!isValid) {
-          std::cout << rule.m_errorMsg << '\n';
+          std::cout << rule.m_errorMsg << "\n \n";
           break;
         }
       }
       if (isValid) {
+        std::cout << '\n';
         return validatedInput;
       }
     }
