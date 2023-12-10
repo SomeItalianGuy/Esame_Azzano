@@ -25,7 +25,7 @@ std::string AskForPopulationInput(const std::string& textToColor,
                                   const std::string& color) {
   return std::string("Please input the number of ") +
          ColorText(textToColor, color) +
-         std::string("individuals you would like: ");
+         std::string(" individuals you would like: ");
 }
 
 }  // namespace Graphic

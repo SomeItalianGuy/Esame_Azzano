@@ -112,7 +112,7 @@ Simulation::Simulation(std::string seed, int passiveNumber,
 }
 
 std::shared_ptr<Simulation> Simulation::GetSimulationFromInput() {
-  auto seed = Logistics::GetValidatedInput<std::string>(
+  auto seed = Logic::GetValidatedInput<std::string>(
       "Please input the seed of this simulation, it can be a number, a "
       "sentence or just a character: ",
       {{[](std::string str) {
@@ -120,18 +120,18 @@ std::shared_ptr<Simulation> Simulation::GetSimulationFromInput() {
           return true;
         },
         ""}});
-  int passiveNumber = Logistics::GetValidatedInput<int>(
+  int passiveNumber = Logic::GetValidatedInput<int>(
       Graphic::AskForPopulationInput(std::string("Passive"), BLUE_TEXT),
       {{[](int numberToValidate) { return numberToValidate > 0; },
-        "The passive number connot be less than 0"}});
-  int aggressiveNumber = Logistics::GetValidatedInput<int>(
+        "The passive number cannot be less than 0"}});
+  int aggressiveNumber = Logic::GetValidatedInput<int>(
       Graphic::AskForPopulationInput(std::string("Aggressive"), YELLOW_TEXT),
       {{[](int numberToValidate) { return numberToValidate > 0; },
-        "The aggressive number connot be less than 0"}});
-  int adaptableNumber = Logistics::GetValidatedInput<int>(
+        "The aggressive number cannot be less than 0"}});
+  int adaptableNumber = Logic::GetValidatedInput<int>(
       Graphic::AskForPopulationInput(std::string("Adaptable"), MAGENTA_TEXT),
       {{[](int numberToValidate) { return numberToValidate > 0; },
-        "The adaptable number connot be less than 0"}});
+        "The adaptable number cannot be less than 0"}});
   return std::shared_ptr<Simulation>(
       new Simulation(seed, passiveNumber, aggressiveNumber, adaptableNumber));
 }
@@ -147,7 +147,7 @@ void Simulation::RunGenerations(int N) {
     while (s_population->Size() > s_population->Get_genMaxPopulation()) {
       EraseRandomIndividual();
     }
-    Logistics::InitializeVectorAndIndex<Place>(
+    Logic::InitializeVectorAndIndex<Place>(
         s_availablePlaces, s_availablePlacesIndex,
         round(s_population->Get_genMaxPopulation() / 2.));
     SetRandomPlaces();
