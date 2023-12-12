@@ -28,4 +28,7 @@ std::string AskForPopulationInput(const std::string& textToColor,
          std::string(" individuals you would like: ");
 }
 
+std::string IntToString(int number) {
+  return number > 0 ? "+" + std::to_string(number) : std::to_string(number);
+}
 }  // namespace Graphic

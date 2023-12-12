@@ -22,6 +22,7 @@ void PrintStats(const std::string& initialText, double percentage, int integer,
 
 std::string AskForPopulationInput(const std::string& textToColor,
                                   const std::string& color);
+std::string IntToString(int number);
 }  // namespace Graphic
 
 #endif

@@ -52,8 +52,8 @@ void Simulation::PrintPassiveOutput() {
       s_simulationData.back().GetPassivePercentage(),
       s_simulationData.back().passiveNumber,
       Graphic::ColorText(
-          std::to_string(passiveVariation),
-          passiveVariation > 0 ? GREEN_TEXT.append("+") : RED_TEXT));
+          Graphic::IntToString(passiveVariation),
+          passiveVariation > 0 ? GREEN_TEXT : RED_TEXT));
 }
 
 void Simulation::PrintAggressiveOutput() {
@@ -65,8 +65,8 @@ void Simulation::PrintAggressiveOutput() {
       s_simulationData.back().GetAggressivePercentage(),
       s_simulationData.back().aggressiveNumber,
       Graphic::ColorText(
-          std::to_string(aggressiveVariation),
-          aggressiveVariation > 0 ? GREEN_TEXT.append("+") : RED_TEXT));
+          Graphic::IntToString(aggressiveVariation),
+          aggressiveVariation > 0 ? GREEN_TEXT : RED_TEXT));
 }
 
 void Simulation::PrintAdaptableOutput() {
@@ -78,8 +78,8 @@ void Simulation::PrintAdaptableOutput() {
       s_simulationData.back().GetAdaptablePercentage(),
       s_simulationData.back().adaptableNumber,
       Graphic::ColorText(
-          std::to_string(adaptableVariation),
-          adaptableVariation > 0 ? GREEN_TEXT.append("+") : RED_TEXT));
+          Graphic::IntToString(adaptableVariation),
+          adaptableVariation > 0 ? GREEN_TEXT : RED_TEXT));
 }
 
 void Simulation::PrintGenerationResults() {
@@ -197,9 +197,9 @@ void Simulation::SaveSimulationToFile() {
           << s_simulationData[0].adaptableNumber << "\n\n";
   fstream << SEPARATION_LINES << '\n';
   for (long unsigned int i = 1; i < s_simulationData.size() - 1; i++) {
-    int passiveVariation = s_simulationData[i].passiveNumber - s_simulationData[i - 1].passiveNumber;
-    int aggressiveVariation = s_simulationData[i].aggressiveNumber - s_simulationData[i - 1].aggressiveNumber;
-    int adaptableVariation = s_simulationData[i].adaptableNumber - s_simulationData[i - 1].adaptableNumber ;
+    std::string passiveVariation = Graphic::IntToString(s_simulationData[i].passiveNumber - s_simulationData[i - 1].passiveNumber);
+    std::string aggressiveVariation = Graphic::IntToString(s_simulationData[i].aggressiveNumber - s_simulationData[i - 1].aggressiveNumber);
+    std::string adaptableVariation = Graphic::IntToString(s_simulationData[i].adaptableNumber - s_simulationData[i - 1].adaptableNumber);
     fstream << "Here is how the  population is divided on generation number "
             << i + 1 << "\n\n";
     fstream << "Passive Individuals:    " << std::fixed << std::setprecision(2)
