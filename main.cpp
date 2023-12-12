@@ -72,10 +72,20 @@ int main() {
       }
       // Comando non valido
       else {
-        std::cout << "Invalid command, try one of the two valid commands\n \n";
+        std::cout << "Invalid command, try one of the two valid commands\n\n";
       }
     }
-    std::cout << "Successfully exited the simulation" << '\n';
+    std::cout << "\nSuccessfully exited the simulation" << "\n\n";
+
+    std::string userInput = Logic::GetValidatedInput<std::string>("Now that we are done with the simulation, would you like to save the data you have collected in a file?(yes/no) ", {{[](std::string str) {return str == "yes" || str == "no";}, "The only accepted inputs are yes or no"}});
+
+    if(userInput == "yes") {
+  simulation->SaveSimulationToFile();
+}
+  else if(userInput == "no") {
+  std::cout << "Quitting the program" << '\n';
+  return EXIT_SUCCESS;
+} 
   }
   // Catch per i possibili errori
   catch (std::domain_error& error) {
@@ -88,5 +98,5 @@ int main() {
     std::cout << "Unkown error has occured" << '\n';
   }
 
-  // Implementare la scrittura su file e la stampa dei grafici
+
 }

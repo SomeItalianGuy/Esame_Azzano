@@ -183,30 +183,31 @@ void Simulation::SaveSimulationToFile() {
   fstream << "\t\t\t\t\t\t\t\t\t\t" << title << "\n\n\n";
   fstream << "Here are the parameters used for this simulation:\n";
   fstream << "Max Population: " << s_population->Get_maxPopulation()
-          << "\t\tReproduction Rate: " << s_population->Get_reproductionRate();
+          << "\t\tReproduction Rate: " << s_population->Get_reproductionRate() << '\n';
   fstream << SEPARATION_LINES;
   fstream << "Here is the user-generated initial population:\n\n";
-  fstream << "Passive individuals: " << std::fixed << std::setprecision(2)
+  fstream << "Passive individuals:    " << std::fixed << std::setprecision(2)
           << s_simulationData[0].GetPassivePercentage() << "\t"
-          << s_simulationData[0].passiveNumber << '\n';
+          << s_simulationData[0].passiveNumber << "\n\n";
   fstream << "Aggressive individuals: " << std::fixed << std::setprecision(2)
           << s_simulationData[0].GetAggressivePercentage() << "\t"
-          << s_simulationData[0].aggressiveNumber << '\n';
-  fstream << "Adaptable individuals: " << std::fixed << std::setprecision(2)
+          << s_simulationData[0].aggressiveNumber << "\n\n";
+  fstream << "Adaptable individuals:  " << std::fixed << std::setprecision(2)
           << s_simulationData[0].GetAdaptablePercentage() << "\t"
           << s_simulationData[0].adaptableNumber << "\n\n";
   fstream << SEPARATION_LINES << '\n';
   for (long unsigned int i = 1; i < s_simulationData.size() - 1; i++) {
-    int passiveVariation = s_simulationData[i - 1].passiveNumber - s_simulationData[i].passiveNumber;
-    int aggressiveVariation = s_simulationData[i - 1].aggressiveNumber - s_simulationData[i].aggressiveNumber;
-    int adaptableVariation = s_simulationData[i - 1].adaptableNumber - s_simulationData[i].adaptableNumber;
+    int passiveVariation = s_simulationData[i].passiveNumber - s_simulationData[i - 1].passiveNumber;
+    int aggressiveVariation = s_simulationData[i].aggressiveNumber - s_simulationData[i - 1].aggressiveNumber;
+    int adaptableVariation = s_simulationData[i].adaptableNumber - s_simulationData[i - 1].adaptableNumber ;
     fstream << "Here is how the  population is divided on generation number "
             << i + 1 << "\n\n";
-    fstream << "Passive Individuals: " << std::fixed << std::setprecision(2)
+    fstream << "Passive Individuals:    " << std::fixed << std::setprecision(2)
             << s_simulationData[i].GetPassivePercentage() << "\t" << s_simulationData[i].passiveNumber << "\t(" << passiveVariation  << ")\n\n";
     fstream << "Aggressive Individuals: " << std::fixed << std::setprecision(2)
             << s_simulationData[i].GetAggressivePercentage() << "\t" << s_simulationData[i].aggressiveNumber << "\t(" << aggressiveVariation  << ")\n\n";
-    fstream << "Adaptables Individuals: " << std::fixed << std::setprecision(2)
+    fstream << "Adaptable Individuals:  " << std::fixed << std::setprecision(2)
             << s_simulationData[i].GetAdaptablePercentage() << "\t" << s_simulationData[i].adaptableNumber << "\t(" << adaptableVariation << ")\n\n";
+            fstream << SEPARATION_LINES << '\n';
   }
 }
