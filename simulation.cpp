@@ -1,10 +1,8 @@
 #include "simulation.hpp"
 
-#include "graphic.hpp"
-#include "individual.hpp"
-#include "logical.hpp"
-#include "population.hpp"
-#include "rnghelper.hpp"
+#define SEPARATION_LINES                                                       \
+  "--------------------------------------------------------------------------" \
+  "------------------------------------------------------------------\n"
 
 void Simulation::EraseRandomIndividual() {
   int randomId = s_RNG->GetRandomInt(0, s_idList.size() - 1);
@@ -136,9 +134,7 @@ std::shared_ptr<Simulation> Simulation::GetSimulationFromInput() {
       new Simulation(seed, passiveNumber, aggressiveNumber, adaptableNumber));
 }
 
-bool Simulation::PopulationIsExtinct() {
-  return s_population->Size() == 0 ? true : false;
-}
+bool Simulation::PopulationIsExtinct() { return s_population->Size() == 0; }
 
 void Simulation::RunGenerations(int N) {
   for (int i = 0; i < N; i++) {
@@ -164,5 +160,49 @@ void Simulation::RunGenerations(int N) {
       std::cout << "Population was led to extinction" << '\n';
       break;
     }
+  }
+}
+
+void Simulation::SaveSimulationToFile() {
+  std::string fileName = Logic::GetValidatedInput<std::string>(
+      "Please input the name of the file in which you want to save this "
+      "simulation: ",
+      {{[](std::string str) { return str.ends_with(".txt"); },
+        "The file name must end with the extension '.txt'"}});
+
+  std::string title = Logic::GetValidatedInput<std::string>(
+      "Please input the title for the simulation to be saved: ",
+      {{[](std::string str) {
+          (void)str;
+          return true;
+        },
+        ""}});
+
+  std::ofstream fstream;
+  fstream.open(fileName, std::ios::app);
+  fstream << "\t\t\t\t\t\t\t\t\t\t" << title << "\n\n\n";
+  fstream << "Here are the parameters used for this simulation:\n";
+  fstream << "Max Population: " << s_population->Get_maxPopulation()
+          << "\t\tReproduction Rate: " << s_population->Get_reproductionRate();
+  fstream << SEPARATION_LINES;
+  fstream << "Here is the user-generated initial population:\n\n";
+  fstream << "Passive individuals: " << std::fixed << std::setprecision(2)
+          << s_simulationData[0].GetPassivePercentage() << "\t"
+          << s_simulationData[0].passiveNumber << '\n';
+  fstream << "Aggressive individuals: " << std::fixed << std::setprecision(2)
+          << s_simulationData[0].GetAggressivePercentage() << "\t"
+          << s_simulationData[0].aggressiveNumber << '\n';
+  fstream << "Adaptable individuals: " << std::fixed << std::setprecision(2)
+          << s_simulationData[0].GetAdaptablePercentage() << "\t"
+          << s_simulationData[0].adaptableNumber << "\n\n";
+  fstream << SEPARATION_LINES << '\n';
+  for (int i = 1; i < s_simulationData.size() - 1; i++) {
+    double passivePercentage = s_simulationData[i].GetPassivePercentage();
+    double aggressivePercentage = s_simulationData[i].GetAggressivePercentage();
+    double adaptablePercentage = s_simulationData[i].GetAdaptablePercentage();
+    fstream << "Here is how the  population is divided on generation number "
+            << i + 1 << "\n\n";
+    fstream << "Passive Individuals: " << std::fixed << std::setprecision(2)
+            << passivePercentage;
   }
 }

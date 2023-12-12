@@ -1,6 +1,8 @@
 #ifndef SIMULATION_HPP
 #define SIMULATION_HPP
 
+#include <fstream>
+
 #include "graphic.hpp"
 #include "individual.hpp"
 #include "logical.hpp"
