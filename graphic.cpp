@@ -6,13 +6,7 @@ std::string ColorText(const std::string& text, const std::string& color) {
   return color + text + "\033[0m";
 }
 
-void PrintSeparationLines() {
-  std::cout << "-----------------------------------------------------"
-               "--------"
-               "-----------------------------------------------------"
-               "--------"
-               "---------------------------------\n";
-}
+void PrintSeparationLines() { std::cout << SEPARATION_LINES; }
 
 void PrintStats(const std::string& initialText, double percentage, int integer,
                 const std::string& lastText) {

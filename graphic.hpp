@@ -6,6 +6,9 @@
 #define BLUE_TEXT std::string("\033[1;34m")
 #define YELLOW_TEXT std::string("\033[1;33m")
 #define MAGENTA_TEXT std::string("\033[1;35m")
+#define SEPARATION_LINES                                                       \
+  "--------------------------------------------------------------------------" \
+  "------------------------------------------------------------------\n"
 
 #include <iomanip>
 #include <iostream>
