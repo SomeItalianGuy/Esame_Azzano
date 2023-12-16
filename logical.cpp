@@ -45,6 +45,18 @@ void Logic::InitializeVectorAndIndex(std::vector<T>& vector,
   }
 }
 
+bool Logic::StringEndsWith(std::string str, std::string endChars) {
+  if (str.size() < endChars.size()) {
+    throw std::invalid_argument("endChars can't be bigger than the string");
+  }
+  for (int i = endChars.size() - 1; i > 0; i--) {
+    if (str[str.size() - i] != endChars[endChars.size() - i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
 // Istanzio GetValidatedInput
 template int Logic::GetValidatedInput<int>(
     std::string inputMessage, std::vector<ValidationRule<int>> rules);

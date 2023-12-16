@@ -5,16 +5,23 @@ include(CTest)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17) 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
+
+find_package(ROOT)
 
 string(APPEND CMAKE_CXX_FLAGS " -Wall -Wextra -fsanitize=address")
 
 string(APPEND CMAKE_CXX_FLAGS_DEBUG " -fsanitize=address,undefined -fno-omit-frame-pointer")
 string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address,undefined -fno-omit-frame-pointer")
 
+message(ROOT="${ROOT}")
+
 add_executable(main main.cpp population.cpp individual.cpp rnghelper.cpp graphic.cpp logical.cpp simulation.cpp)
+
+target_link_libraries(main ROOT::Core)
+target_include_directories(main PUBLIC ROOT_INCLUDE_DIRS)
 
 #-DBUILD_TESTING=OFF per disabilitare i test
 if (BUILD_TESTING)

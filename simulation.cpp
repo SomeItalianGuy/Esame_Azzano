@@ -1,5 +1,7 @@
 #include "simulation.hpp"
 
+#include <TH1D.h>  //TODO figure out the root stuff
+
 #define SEPARATION_LINES                                                       \
   "--------------------------------------------------------------------------" \
   "------------------------------------------------------------------\n"
@@ -51,9 +53,8 @@ void Simulation::PrintPassiveOutput() {
       Graphic::ColorText("Passive", BLUE_TEXT).append(" individuals: "),
       s_simulationData.back().GetPassivePercentage(),
       s_simulationData.back().passiveNumber,
-      Graphic::ColorText(
-          Graphic::IntToString(passiveVariation),
-          passiveVariation > 0 ? GREEN_TEXT : RED_TEXT));
+      Graphic::ColorText(Graphic::IntToString(passiveVariation),
+                         passiveVariation > 0 ? GREEN_TEXT : RED_TEXT));
 }
 
 void Simulation::PrintAggressiveOutput() {
@@ -64,9 +65,8 @@ void Simulation::PrintAggressiveOutput() {
       Graphic::ColorText("Aggressive", YELLOW_TEXT).append(" individuals: "),
       s_simulationData.back().GetAggressivePercentage(),
       s_simulationData.back().aggressiveNumber,
-      Graphic::ColorText(
-          Graphic::IntToString(aggressiveVariation),
-          aggressiveVariation > 0 ? GREEN_TEXT : RED_TEXT));
+      Graphic::ColorText(Graphic::IntToString(aggressiveVariation),
+                         aggressiveVariation > 0 ? GREEN_TEXT : RED_TEXT));
 }
 
 void Simulation::PrintAdaptableOutput() {
@@ -77,9 +77,8 @@ void Simulation::PrintAdaptableOutput() {
       Graphic::ColorText("Adaptable", MAGENTA_TEXT).append(" individuals: "),
       s_simulationData.back().GetAdaptablePercentage(),
       s_simulationData.back().adaptableNumber,
-      Graphic::ColorText(
-          Graphic::IntToString(adaptableVariation),
-          adaptableVariation > 0 ? GREEN_TEXT : RED_TEXT));
+      Graphic::ColorText(Graphic::IntToString(adaptableVariation),
+                         adaptableVariation > 0 ? GREEN_TEXT : RED_TEXT));
 }
 
 void Simulation::PrintGenerationResults() {
@@ -167,7 +166,7 @@ void Simulation::SaveSimulationToFile() {
   std::string fileName = Logic::GetValidatedInput<std::string>(
       "Please input the name of the file in which you want to save this "
       "simulation: ",
-      {{[](std::string str) { return str.ends_with(".txt"); },
+      {{[](std::string str) { return Logic::StringEndsWith(str, ".txt"); },
         "The file name must end with the extension '.txt'"}});
 
   std::string title = Logic::GetValidatedInput<std::string>(
@@ -183,7 +182,8 @@ void Simulation::SaveSimulationToFile() {
   fstream << "\t\t\t\t\t\t\t\t\t\t" << title << "\n\n\n";
   fstream << "Here are the parameters used for this simulation:\n";
   fstream << "Max Population: " << s_population->Get_maxPopulation()
-          << "\t\tReproduction Rate: " << s_population->Get_reproductionRate() << '\n';
+          << "\t\tReproduction Rate: " << s_population->Get_reproductionRate()
+          << '\n';
   fstream << SEPARATION_LINES;
   fstream << "Here is the user-generated initial population:\n\n";
   fstream << "Passive individuals:    " << std::fixed << std::setprecision(2)
@@ -197,17 +197,29 @@ void Simulation::SaveSimulationToFile() {
           << s_simulationData[0].adaptableNumber << "\n\n";
   fstream << SEPARATION_LINES << '\n';
   for (long unsigned int i = 1; i < s_simulationData.size() - 1; i++) {
-    std::string passiveVariation = Graphic::IntToString(s_simulationData[i].passiveNumber - s_simulationData[i - 1].passiveNumber);
-    std::string aggressiveVariation = Graphic::IntToString(s_simulationData[i].aggressiveNumber - s_simulationData[i - 1].aggressiveNumber);
-    std::string adaptableVariation = Graphic::IntToString(s_simulationData[i].adaptableNumber - s_simulationData[i - 1].adaptableNumber);
+    std::string passiveVariation =
+        Graphic::IntToString(s_simulationData[i].passiveNumber -
+                             s_simulationData[i - 1].passiveNumber);
+    std::string aggressiveVariation =
+        Graphic::IntToString(s_simulationData[i].aggressiveNumber -
+                             s_simulationData[i - 1].aggressiveNumber);
+    std::string adaptableVariation =
+        Graphic::IntToString(s_simulationData[i].adaptableNumber -
+                             s_simulationData[i - 1].adaptableNumber);
     fstream << "Here is how the  population is divided on generation number "
             << i + 1 << "\n\n";
     fstream << "Passive Individuals:    " << std::fixed << std::setprecision(2)
-            << s_simulationData[i].GetPassivePercentage() << "\t" << s_simulationData[i].passiveNumber << "\t(" << passiveVariation  << ")\n\n";
+            << s_simulationData[i].GetPassivePercentage() << "\t"
+            << s_simulationData[i].passiveNumber << "\t(" << passiveVariation
+            << ")\n\n";
     fstream << "Aggressive Individuals: " << std::fixed << std::setprecision(2)
-            << s_simulationData[i].GetAggressivePercentage() << "\t" << s_simulationData[i].aggressiveNumber << "\t(" << aggressiveVariation  << ")\n\n";
+            << s_simulationData[i].GetAggressivePercentage() << "\t"
+            << s_simulationData[i].aggressiveNumber << "\t("
+            << aggressiveVariation << ")\n\n";
     fstream << "Adaptable Individuals:  " << std::fixed << std::setprecision(2)
-            << s_simulationData[i].GetAdaptablePercentage() << "\t" << s_simulationData[i].adaptableNumber << "\t(" << adaptableVariation << ")\n\n";
-            fstream << SEPARATION_LINES << '\n';
+            << s_simulationData[i].GetAdaptablePercentage() << "\t"
+            << s_simulationData[i].adaptableNumber << "\t("
+            << adaptableVariation << ")\n\n";
+    fstream << SEPARATION_LINES << '\n';
   }
 }

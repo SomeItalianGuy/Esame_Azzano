@@ -22,6 +22,7 @@ template <typename T>
 void InitializeVectorAndIndex(std::vector<T>& vector, std::vector<int>& indexes,
                               int nSamples);
 
+bool StringEndsWith(std::string str, std::string endChars);
 };  // namespace Logic
 
 #endif

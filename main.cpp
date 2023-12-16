@@ -75,17 +75,21 @@ int main() {
         std::cout << "Invalid command, try one of the two valid commands\n\n";
       }
     }
-    std::cout << "\nSuccessfully exited the simulation" << "\n\n";
+    std::cout << "\nSuccessfully exited the simulation"
+              << "\n\n";
 
-    std::string userInput = Logic::GetValidatedInput<std::string>("Now that we are done with the simulation, would you like to save the data you have collected in a file?(yes/no) ", {{[](std::string str) {return str == "yes" || str == "no";}, "The only accepted inputs are yes or no"}});
+    std::string userInput = Logic::GetValidatedInput<std::string>(
+        "Now that we are done with the simulation, would you like to save the "
+        "data you have collected in a file?(yes/no) ",
+        {{[](std::string str) { return str == "yes" || str == "no"; },
+          "The only accepted inputs are yes or no"}});
 
-    if(userInput == "yes") {
-  simulation->SaveSimulationToFile();
-}
-  else if(userInput == "no") {
-  std::cout << "Quitting the program" << '\n';
-  return EXIT_SUCCESS;
-} 
+    if (userInput == "yes") {
+      simulation->SaveSimulationToFile();
+    } else if (userInput == "no") {
+      std::cout << "Quitting the program" << '\n';
+      return EXIT_SUCCESS;
+    }
   }
   // Catch per i possibili errori
   catch (std::domain_error& error) {
@@ -97,6 +101,4 @@ int main() {
   } catch (...) {
     std::cout << "Unkown error has occured" << '\n';
   }
-
-
 }
