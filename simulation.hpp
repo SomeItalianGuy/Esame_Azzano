@@ -8,6 +8,7 @@
 #include "logical.hpp"
 #include "population.hpp"
 #include "rnghelper.hpp"
+#include "roothelper.hpp"
 
 class Simulation {
  private:

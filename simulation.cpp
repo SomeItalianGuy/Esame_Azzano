@@ -1,7 +1,5 @@
 #include "simulation.hpp"
 
-#include <TH1D.h>  //TODO figure out the root stuff
-
 void Simulation::EraseRandomIndividual() {
   int randomId = s_RNG->GetRandomInt(0, s_idList.size() - 1);
   auto id = s_idList.begin() + randomId;
