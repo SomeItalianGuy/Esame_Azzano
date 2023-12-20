@@ -10,8 +10,9 @@ void PrintSeparationLines() { std::cout << SEPARATION_LINES; }
 
 void PrintStats(const std::string& initialText, double percentage, int integer,
                 const std::string& lastText) {
-  std::cout << initialText << std::fixed << std::setprecision(2) << percentage
-            << "%  " << integer << "  (" << lastText << ")\n";
+  std::cout << initialText << "     \t" << std::fixed << std::setprecision(2)
+            << percentage << "%\t\t\t" << integer << "\t\t(" << lastText
+            << ")\n";
   std::cout << '\n';
 }
 

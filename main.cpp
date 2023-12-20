@@ -34,20 +34,21 @@ int main() {
         Simulation::GetSimulationFromInput();
 
     // Messaggi per spiegare i due comandi disponibili durante la simulazione
-    std::cout << '\n';
     std::cout << "Now we are set to go, here is a list of all the possible "
-                 "commands:\n"
-              << "-run [value]          : lets you run a number equal to value "
-                 "of generations, for each generation prints"
-                 "the number of individuals for each behavior;\n"
-              << "-quit                 : lets you quit the simulation.\n"
-              << '\n';
+                 "commands:\n";
 
     int userIntInput;
     std::string userStringInput;
 
     // Fase centrale della simulazione
     while (!simulation->PopulationIsExtinct()) {
+      std::cout << '\n';
+      std::cout
+          << "-run [value]          : lets you run a number equal to value "
+          << "of generations, for each generation prints "
+          << "the number of individuals for each behavior;\n"
+          << "-quit                 : lets you quit the simulation.\n"
+          << '\n';
       std::cout << "What would you like to do now? ";
       std::cin >> userStringInput;
       if (std::cin.peek() == '\n') {

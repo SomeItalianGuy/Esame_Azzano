@@ -82,14 +82,15 @@ void Simulation::PrintAdaptableOutput() {
 void Simulation::PrintGenerationResults() {
   Graphic::PrintSeparationLines();
   std::cout << "After " << s_simulationData.size()
-            << " generations, here is how the population is split up:" << '\n';
-  std::cout << '\n';
+            << " generations, here is how the population is split up:"
+            << "\n\n";
+  std::cout << "Individual type\t\t\tPercentage\t\tNumber\t\tVariation\n\n";
   PrintPassiveOutput();
-  std::cout << '\n';
+
   PrintAggressiveOutput();
-  std::cout << '\n';
+
   PrintAdaptableOutput();
-  std::cout << '\n';
+
   Graphic::PrintSeparationLines();
 }
 
