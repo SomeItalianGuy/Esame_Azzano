@@ -165,8 +165,12 @@ void Simulation::SaveSimulationToFile() {
   std::string fileName = Logic::GetValidatedInput<std::string>(
       "Please input the name of the file in which you want to save this "
       "simulation: ",
-      {{[](std::string str) { return Logic::StringEndsWith(str, ".txt"); },
-        "The file name must end with the extension '.txt'"}});
+      {{[](std::string str) {
+          (void)str;
+          return true;
+        },
+        ""}});
+  fileName.append(".txt");
 
   std::string title = Logic::GetValidatedInput<std::string>(
       "Please input the title for the simulation to be saved: ",
@@ -223,6 +227,9 @@ void Simulation::SaveSimulationToFile() {
             << adaptableVariation << ")\n\n";
     fstream << SEPARATION_LINES << '\n';
   }
+
+  std::cout << "Simulation saved to '" << fileName << "' as '" << title
+            << "'\n\n";
 }
 
 void Simulation::PrintGraphs() { std::cout << "Hey ho trovato root" << '\n'; }
