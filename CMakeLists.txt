@@ -40,6 +40,9 @@ if(ROOT_FOUND)
 
 add_executable(main.test main.test.cpp population.cpp individual.cpp rnghelper.cpp graphic.cpp logical.cpp simulation.cpp roothelper.cpp)
 
+target_link_libraries(main.test ROOT::Core)
+target_include_directories(main.test PUBLIC ROOT_INCLUDE_DIRS)
+
 else()
 
 add_executable(main.test main.test.cpp population.cpp individual.cpp rnghelper.cpp graphic.cpp logical.cpp simulation.cpp)
