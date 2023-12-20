@@ -1,9 +1,3 @@
-#include <iomanip>
-#include <iostream>
-#include <limits>
-#include <random>
-#include <sstream>
-
 #include "simulation.hpp"
 
 int main() {
@@ -14,7 +8,6 @@ int main() {
     std::cout << "Welcome to behavioral evolution,\n"
               << "in this simulation we recognize three types of behaviors:\n"
               << '\n'
-
               << "-" << Graphic::ColorText(std::string("Passive"), BLUE_TEXT)
               << " :    tries to divide food equally with its bretheren;\n"
               << '\n'
@@ -22,7 +15,7 @@ int main() {
               << "-"
               << Graphic::ColorText(std::string("Aggressive"), YELLOW_TEXT)
               << " : will try to steal most of the food it finds "
-                 "but gets exhasted when it has to compete;\n"
+                 "but gets exhausted when it has to compete;\n"
               << '\n'
 
               << "-"
@@ -86,10 +79,19 @@ int main() {
 
     if (userInput == "yes") {
       simulation->SaveSimulationToFile();
-    } else if (userInput == "no") {
-      std::cout << "Quitting the program" << '\n';
-      return EXIT_SUCCESS;
+#ifdef MY_ROOT
+      simulation->PrintGraphs();
+#else
+      std::cout
+          << "Could not find the root package, therfore the graphs could "
+             "not be printed. In order to solve this problem i recommend "
+             "visiting "
+             "https://root.cern/manual/integrate_root_into_my_cmake_project/"
+          << '\n';
+#endif
     }
+    std::cout << "Quitting the program" << '\n';
+    return EXIT_SUCCESS;
   }
   // Catch per i possibili errori
   catch (std::domain_error& error) {

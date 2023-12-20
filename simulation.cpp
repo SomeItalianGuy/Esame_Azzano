@@ -1,5 +1,9 @@
 #include "simulation.hpp"
 
+#ifdef MY_ROOT
+#include "roothelper.hpp"
+#endif
+
 void Simulation::EraseRandomIndividual() {
   int randomId = s_RNG->GetRandomInt(0, s_idList.size() - 1);
   auto id = s_idList.begin() + randomId;
@@ -180,14 +184,15 @@ void Simulation::SaveSimulationToFile() {
           << '\n';
   fstream << SEPARATION_LINES;
   fstream << "Here is the user-generated initial population:\n\n";
+  fstream << "Individual type\t\t\tPercentage\t\tNumber\n\n";
   fstream << "Passive individuals:    " << std::fixed << std::setprecision(2)
-          << s_simulationData[0].GetPassivePercentage() << "\t"
+          << s_simulationData[0].GetPassivePercentage() << "%\t\t\t"
           << s_simulationData[0].passiveNumber << "\n\n";
   fstream << "Aggressive individuals: " << std::fixed << std::setprecision(2)
-          << s_simulationData[0].GetAggressivePercentage() << "\t"
+          << s_simulationData[0].GetAggressivePercentage() << "%\t\t\t"
           << s_simulationData[0].aggressiveNumber << "\n\n";
   fstream << "Adaptable individuals:  " << std::fixed << std::setprecision(2)
-          << s_simulationData[0].GetAdaptablePercentage() << "\t"
+          << s_simulationData[0].GetAdaptablePercentage() << "%\t\t\t"
           << s_simulationData[0].adaptableNumber << "\n\n";
   fstream << SEPARATION_LINES << '\n';
   for (long unsigned int i = 1; i < s_simulationData.size() - 1; i++) {
@@ -200,20 +205,23 @@ void Simulation::SaveSimulationToFile() {
     std::string adaptableVariation =
         Graphic::IntToString(s_simulationData[i].adaptableNumber -
                              s_simulationData[i - 1].adaptableNumber);
-    fstream << "Here is how the  population is divided on generation number "
+    fstream << "Here is how the population is divided on generation number "
             << i + 1 << "\n\n";
+    fstream << "Individual type\t\t\tPercentage\t\tNumber\t\tVariation\n\n";
     fstream << "Passive Individuals:    " << std::fixed << std::setprecision(2)
-            << s_simulationData[i].GetPassivePercentage() << "\t"
-            << s_simulationData[i].passiveNumber << "\t(" << passiveVariation
-            << ")\n\n";
+            << s_simulationData[i].GetPassivePercentage() << "%\t\t\t"
+            << s_simulationData[i].passiveNumber << "\t\t\t("
+            << passiveVariation << ")\n\n";
     fstream << "Aggressive Individuals: " << std::fixed << std::setprecision(2)
-            << s_simulationData[i].GetAggressivePercentage() << "\t"
-            << s_simulationData[i].aggressiveNumber << "\t("
+            << s_simulationData[i].GetAggressivePercentage() << "%\t\t\t"
+            << s_simulationData[i].aggressiveNumber << "\t\t\t("
             << aggressiveVariation << ")\n\n";
     fstream << "Adaptable Individuals:  " << std::fixed << std::setprecision(2)
-            << s_simulationData[i].GetAdaptablePercentage() << "\t"
-            << s_simulationData[i].adaptableNumber << "\t("
+            << s_simulationData[i].GetAdaptablePercentage() << "%\t\t\t"
+            << s_simulationData[i].adaptableNumber << "\t\t\t("
             << adaptableVariation << ")\n\n";
     fstream << SEPARATION_LINES << '\n';
   }
 }
+
+void Simulation::PrintGraphs() { std::cout << "Hey ho trovato root" << '\n'; }
