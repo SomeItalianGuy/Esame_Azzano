@@ -1,9 +1,5 @@
 #include "simulation.hpp"
 
-#ifdef MY_ROOT
-#include "roothelper.hpp"
-#endif
-
 void Simulation::EraseRandomIndividual() {
   int randomId = s_RNG->GetRandomInt(0, s_idList.size() - 1);
   auto id = s_idList.begin() + randomId;
@@ -232,4 +228,6 @@ void Simulation::SaveSimulationToFile() {
             << "'\n\n";
 }
 
+#ifdef MY_ROOT
 void Simulation::PrintGraphs() { std::cout << "Hey ho trovato root" << '\n'; }
+#endif

@@ -33,7 +33,9 @@ class Simulation {
   bool PopulationIsExtinct();
   void RunGenerations(int N);
   void SaveSimulationToFile();
+#ifdef MY_ROOT
   void PrintGraphs();
+#endif
 };
 
 #endif
