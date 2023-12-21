@@ -176,6 +176,8 @@ void Simulation::SaveSimulationToFile() {
         },
         ""}});
 
+  s_title = title.c_str();
+
   std::ofstream fstream;
   fstream.open(fileName, std::ios::app);
   fstream << "\t\t\t\t\t\t\t\t\t\t" << title << "\n\n\n";
@@ -229,5 +231,24 @@ void Simulation::SaveSimulationToFile() {
 }
 
 #ifdef MY_ROOT
-void Simulation::PrintGraphs() { std::cout << "Hey ho trovato root" << '\n'; }
+void Simulation::PrintGraphs() {
+  // RootHelper rootHelper("Canvas", s_title, 700, 500);
+  std::vector<int> passiveVector;
+  std::vector<int> aggressiveVector;
+  std::vector<int> adaptableVector;
+  std::vector<int> totalPopulationVector;
+  for (auto gendata : s_simulationData) {
+    passiveVector.push_back(gendata.passiveNumber);
+    aggressiveVector.push_back(gendata.aggressiveNumber);
+    adaptableVector.push_back(gendata.adaptableNumber);
+    totalPopulationVector.push_back(gendata.GetTotalPopulation());
+  }
+  // rootHelper.AddGraph("Passive", passiveVector);
+  // rootHelper.AddGraph("Aggressive", aggressiveVector);
+  // rootHelper.AddGraph("Adaptable", adaptableVector);
+  // rootHelper.AddGraph("Total-Population", totalPopulationVector);
+  // rootHelper.DivideCanvas(1, 2);
+  // rootHelper.Draw(1, {"Passive", "Aggressive", "Adaptable"});
+  // rootHelper.Draw(2, {"Total-Population"});
+}
 #endif

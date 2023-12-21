@@ -4,22 +4,20 @@
 
 #include <TCanvas.h>
 #include <TGraph.h>
-#include <TObject.h>
-#include <TPad.h>
 
 #include <string>
 #include <unordered_map>
 
 class RootHelper {
  private:
-  std::vector<TGraph> R_data;
+  std::unordered_map<const char*, TGraph> R_data;
   TCanvas R_canvas;
 
  public:
   RootHelper(const char* name, const char* title, int wide, int height);
-  void AddGraph(std::vector<int> data);
+  void AddGraph(const char* name, std::vector<int> data);
   void DivideCanvas(int lineNumber, int columnNumber);
-  void Draw(int canvasPosition, std::vector<int> names);
+  void Draw(int canvasPosition, std::vector<const char*> names);
 };
 
 #endif  // MY_ROOT

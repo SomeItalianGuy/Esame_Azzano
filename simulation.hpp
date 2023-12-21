@@ -17,6 +17,7 @@ class Simulation {
   std::vector<int> s_idList, s_availablePlacesIndex;
   std::vector<Place> s_availablePlaces;
   std::vector<GenerationData> s_simulationData;
+  const char* s_title;
   void EraseRandomIndividual();
   void SetRandomPlaces();
   void GenerateNextGeneration();
@@ -35,7 +36,7 @@ class Simulation {
   void SaveSimulationToFile();
 #ifdef MY_ROOT
   void PrintGraphs();
-#endif
+#endif  // MY_ROOT
 };
 
-#endif
+#endif  // SIMULATION_HPP
