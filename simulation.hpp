@@ -18,6 +18,7 @@ class Simulation {
   std::vector<Place> s_availablePlaces;
   std::vector<GenerationData> s_simulationData;
   const char* s_title;
+  std::string s_fileName;
   void EraseRandomIndividual();
   void SetRandomPlaces();
   void GenerateNextGeneration();

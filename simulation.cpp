@@ -166,6 +166,9 @@ void Simulation::SaveSimulationToFile() {
           return true;
         },
         ""}});
+
+  s_fileName = fileName;
+
   fileName.append(".txt");
 
   std::string title = Logic::GetValidatedInput<std::string>(
@@ -232,7 +235,7 @@ void Simulation::SaveSimulationToFile() {
 
 #ifdef MY_ROOT
 void Simulation::PrintGraphs() {
-  // RootHelper rootHelper("Canvas", s_title, 700, 500);
+  RootHelper rootHelper("Canvas", s_title, 700, 500);
   std::vector<int> passiveVector;
   std::vector<int> aggressiveVector;
   std::vector<int> adaptableVector;
@@ -243,12 +246,14 @@ void Simulation::PrintGraphs() {
     adaptableVector.push_back(gendata.adaptableNumber);
     totalPopulationVector.push_back(gendata.GetTotalPopulation());
   }
-  // rootHelper.AddGraph("Passive", passiveVector);
-  // rootHelper.AddGraph("Aggressive", aggressiveVector);
-  // rootHelper.AddGraph("Adaptable", adaptableVector);
-  // rootHelper.AddGraph("Total-Population", totalPopulationVector);
-  // rootHelper.DivideCanvas(1, 2);
-  // rootHelper.Draw(1, {"Passive", "Aggressive", "Adaptable"});
-  // rootHelper.Draw(2, {"Total-Population"});
+  rootHelper.AddGraph("Passive", passiveVector);
+  rootHelper.AddGraph("Aggressive", aggressiveVector);
+  rootHelper.AddGraph("Adaptable", adaptableVector);
+  rootHelper.AddGraph("Total-Population", totalPopulationVector);
+  rootHelper.DivideCanvas(1, 2);
+  rootHelper.Draw(1, {"Passive", "Aggressive", "Adaptable"},
+                  {kBlue, kOrange, kMagenta});
+  rootHelper.Draw(2, {"Total-Population"}, {kRed});
+  rootHelper.PrintToFile(s_fileName);
 }
 #endif

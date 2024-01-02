@@ -90,15 +90,16 @@ int main() {
              "https://root.cern/manual/integrate_root_into_my_cmake_project/"
           << '\n';
 #endif
+
+      std::cout << "Quitting the program" << '\n';
+      return EXIT_SUCCESS;
     }
-    std::cout << "Quitting the program" << '\n';
-    return EXIT_SUCCESS;
   }
   // Catch per i possibili errori
-  catch (std::domain_error& error) {
+  catch (std::domain_error &error) {
     std::cout << "Caught a domain error: ";
     std::cout << error.what() << '\n';
-  } catch (std::overflow_error& error) {
+  } catch (std::overflow_error &error) {
     std::cout << "Caught an overflow error: ";
     std::cout << error.what() << '\n';
   } catch (...) {
