@@ -1,6 +1,7 @@
 #ifndef SIMULATION_HPP
 #define SIMULATION_HPP
 
+#include <filesystem>
 #include <fstream>
 
 #include "graphic.hpp"
@@ -34,7 +35,8 @@ class Simulation {
   static std::shared_ptr<Simulation> GetSimulationFromInput();
   bool PopulationIsExtinct();
   void RunGenerations(int N);
-  void SaveSimulationToFile();
+  void SaveSimulationToFile(std::string pathToFile);
+  void CreateOutputDir(std::string dirName);
 #ifdef MY_ROOT
   void PrintGraphs();
 #endif  // MY_ROOT

@@ -23,7 +23,7 @@ class RootHelper {
   void DivideCanvas(int lineNumber, int columnNumber);
   void Draw(int canvasPosition, std::vector<std::string> names,
             std::vector<EColor> colors);
-  void PrintToFile(std::string& fileName);
+  void PrintToFile(std::string& fileName, std::string pathToSave);
 };
 
 #endif  // MY_ROOT

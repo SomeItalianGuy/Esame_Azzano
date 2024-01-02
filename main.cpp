@@ -79,7 +79,8 @@ int main() {
           "The only accepted inputs are yes or no"}});
 
     if (userInput == "yes") {
-      simulation->SaveSimulationToFile();
+      simulation->CreateOutputDir("results/");
+      simulation->SaveSimulationToFile("results/");
 #ifdef MY_ROOT
       simulation->PrintGraphs();
 #else
@@ -102,6 +103,8 @@ int main() {
   } catch (std::overflow_error &error) {
     std::cout << "Caught an overflow error: ";
     std::cout << error.what() << '\n';
+  } catch (std::runtime_error &error) {
+    std::cout << "Caught a runtime error: " << error.what() << '\n';
   } catch (...) {
     std::cout << "Unkown error has occured" << '\n';
   }

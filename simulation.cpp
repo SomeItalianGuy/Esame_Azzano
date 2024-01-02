@@ -157,7 +157,7 @@ void Simulation::RunGenerations(int N) {
   }
 }
 
-void Simulation::SaveSimulationToFile() {
+void Simulation::SaveSimulationToFile(std::string pathToFile) {
   std::string fileName = Logic::GetValidatedInput<std::string>(
       "Please input the name of the file in which you want to save this "
       "simulation: ",
@@ -182,7 +182,7 @@ void Simulation::SaveSimulationToFile() {
   s_title = title.c_str();
 
   std::ofstream fstream;
-  fstream.open(fileName, std::ios::app);
+  fstream.open(pathToFile + fileName, std::ios::app);
   fstream << "\t\t\t\t\t\t\t\t\t\t" << title << "\n\n\n";
   fstream << "Here are the parameters used for this simulation:\n";
   fstream << "Max Population: " << s_population->Get_maxPopulation()
@@ -233,6 +233,12 @@ void Simulation::SaveSimulationToFile() {
             << "'\n\n";
 }
 
+void Simulation::CreateOutputDir(std::string dirName) {
+  if (!std::filesystem::exists(dirName)) {
+    std::filesystem::create_directory(dirName);
+  }
+}
+
 #ifdef MY_ROOT
 void Simulation::PrintGraphs() {
   RootHelper rootHelper("Canvas", s_title, 700, 500);
@@ -254,6 +260,6 @@ void Simulation::PrintGraphs() {
   rootHelper.Draw(1, {"Passive", "Aggressive", "Adaptable"},
                   {kBlue, kOrange, kMagenta});
   rootHelper.Draw(2, {"Total-Population"}, {kRed});
-  rootHelper.PrintToFile(s_fileName);
+  rootHelper.PrintToFile(s_fileName, "results/");
 }
 #endif

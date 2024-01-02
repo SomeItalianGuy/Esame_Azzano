@@ -15,7 +15,7 @@ void Place::Add_Index(int newIndex) {
     secondIndex_ = newIndex;
     // std::cout << "Secondo indice modificato: " << secondIndex_ << '\n';
   } else {
-    std::cout << "Too many indexes in one place\n";
+    throw std::runtime_error("Tried adding a third id to a place");
   }
 }
 

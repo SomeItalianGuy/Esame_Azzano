@@ -37,11 +37,17 @@ void RootHelper::Draw(int canvasPosition, std::vector<std::string> names,
     R_data[names[i]].SetLineColor(colors[i]);
     R_data[names[i]].Draw("PL same");
   }
+
+  countDrawn += names.size();
 }
 
-void RootHelper::PrintToFile(std::string& fileName) {
+void RootHelper::PrintToFile(std::string& fileName, std::string pathToSave) {
+  if (countDrawn == 0) {
+    throw std::runtime_error("Cannot print without having drawn anything");
+  }
+
   fileName.append(".root");
-  TFile saveFile(fileName.c_str(), "UPDATE");
+  TFile saveFile((pathToSave + fileName).c_str(), "UPDATE");
   saveFile.Save();
 
   R_canvas.Write();
