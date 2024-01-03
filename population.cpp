@@ -92,6 +92,9 @@ unsigned long long int Population::NextId = 0;
 // Getters
 
 void Population::Get_IdList(std::vector<int>& namesList) const {
+  if (!namesList.size() == 0) {
+    throw std::invalid_argument("Get_IdList needs an empty vector");
+  }
   for (auto& entity : group_) {
     namesList.push_back(entity.first);
   }
@@ -106,6 +109,11 @@ int Population::Get_genMaxPopulation() const {
 double Population::Get_reproductionRate() const { return reproductionRate_; }
 
 double Population::Get_IndividualFood(int Individual_id) {
+  if (group_.find(Individual_id) == group_.end()) {
+    throw std::invalid_argument(
+        "In method Get_IndividualFood, an invalid id was passed: " +
+        std::to_string(Individual_id));
+  }
   return group_[Individual_id].GetFood();
 }
 
@@ -193,13 +201,13 @@ void Population::Interaction(Place& place) {
         return;
       }
     } else {
-      std::cout << "Unknown type of behavior\n";
+      throw std::runtime_error("Unkown behavior in interaction");
     }
   } else if (place.isHalfFull()) {
     group_[place.firstIndex_].SetFood(2);
   } else {
+    // Per il caso di default (luogo vuoto) non deve succedere nulla
   }
-  // Per il caso di default (luogo vuoto) non deve succedere nulla
 }
 
 GenerationData Population::WriteTo_GenerationData() {
@@ -209,8 +217,11 @@ GenerationData Population::WriteTo_GenerationData() {
       generationData.passiveNumber++;
     } else if (entity.second.GetBehavior() == Behavior::Aggressive) {
       generationData.aggressiveNumber++;
-    } else {
+    } else if (entity.second.GetBehavior() == Behavior::Adaptable) {
       generationData.adaptableNumber++;
+    } else {
+      throw std::runtime_error(
+          "Unkown type of behavior found in WriteToGenerationData");
     }
   }
   return generationData;
@@ -259,7 +270,8 @@ void Population::SaveSimulationToFile(std::vector<GenerationData> const& data,
       file << '\n';
     }
   } else {
-    std::cout << "Couldn't open file" << '\n';
+    throw std::runtime_error(
+        "Could not open file in Population::SaveSimulationToFile");
   }
 }
 

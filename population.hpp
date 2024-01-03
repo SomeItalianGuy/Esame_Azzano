@@ -40,7 +40,11 @@ class Population {
              double startingPercentage)
       : reproductionRate_(reproductionRate),
         maxPopulation_(round(startingPopulation / startingPercentage) * 2),
-        currentPercentage_(startingPercentage) {}
+        currentPercentage_(startingPercentage) {
+    if (startingPopulation == 0) {
+      throw std::invalid_argument("Starting Population cannot be 0");
+    }
+  }
   // Variables
   double reproductionRate_;
   const int maxPopulation_;
