@@ -182,7 +182,7 @@ void Simulation::SaveSimulationToFile(std::string pathToFile) {
   s_title = title.c_str();
 
   std::ofstream fstream;
-  fstream.open(pathToFile + fileName, std::ios::app);
+  fstream.open(pathToFile += fileName, std::ios::app);
   fstream << "\t\t\t\t\t\t\t\t\t\t" << title << "\n\n\n";
   fstream << "Here are the parameters used for this simulation:\n";
   fstream << "Max Population: " << s_population->Get_maxPopulation()
@@ -229,7 +229,7 @@ void Simulation::SaveSimulationToFile(std::string pathToFile) {
     fstream << SEPARATION_LINES << '\n';
   }
 
-  std::cout << "Simulation saved to '" << fileName << "' as '" << title
+  std::cout << "Simulation saved to '" << pathToFile << "' as '" << s_title
             << "'\n\n";
 }
 
@@ -241,7 +241,7 @@ void Simulation::CreateOutputDir(std::string dirName) {
 
 #ifdef MY_ROOT
 void Simulation::PrintGraphs() {
-  RootHelper rootHelper("Canvas", s_title, 700, 500);
+  RootHelper rootHelper(s_title, s_title, 700, 500);
   std::vector<int> passiveVector;
   std::vector<int> aggressiveVector;
   std::vector<int> adaptableVector;
@@ -256,10 +256,15 @@ void Simulation::PrintGraphs() {
   rootHelper.AddGraph("Aggressive", aggressiveVector);
   rootHelper.AddGraph("Adaptable", adaptableVector);
   rootHelper.AddGraph("Total-Population", totalPopulationVector);
-  rootHelper.DivideCanvas(1, 2);
-  rootHelper.Draw(1, {"Passive", "Aggressive", "Adaptable"},
-                  {kBlue, kOrange, kMagenta});
-  rootHelper.Draw(2, {"Total-Population"}, {kRed});
+  rootHelper.DivideCanvas(2, 2);
+  rootHelper.Draw(1, "Passive individuals", "Generations",
+                  "Number of individuals", "Passive", kBlue);
+  rootHelper.Draw(2, "Aggressive individuals", "Generations",
+                  "Number of individuals", "Aggressive", kOrange);
+  rootHelper.Draw(3, "Adaptable individuals", "Generations",
+                  "Number of individuals", "Adaptable", kMagenta);
+  rootHelper.Draw(4, "Total population", "Generations", "Number of individuals",
+                  "Total-Population", kRed);
   rootHelper.PrintToFile(s_fileName, "results/");
 }
 #endif

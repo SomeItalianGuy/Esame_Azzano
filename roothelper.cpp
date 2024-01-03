@@ -2,7 +2,9 @@
 
 RootHelper::RootHelper(std::string name, std::string title, int wide,
                        int height)
-    : R_canvas(name.c_str(), title.c_str(), wide, height), countDrawn(0) {}
+    : R_canvas(name.c_str(), title.c_str(), wide, height),
+      countDrawn(0),
+      countDivide(1) {}
 
 RootHelper::~RootHelper() {}
 
@@ -15,35 +17,38 @@ void RootHelper::AddGraph(std::string name, std::vector<int> data) {
     y_array[i] = data[i];
   }
 
-  R_data[name] = TGraph(size, x_array, y_array);
+  TGraph graph(size, x_array, y_array);
+
+  R_data[name] = graph;
 }
 
 void RootHelper::DivideCanvas(int lineNumber, int columnNumber) {
   R_canvas.Divide(columnNumber, lineNumber);
+  countDivide = columnNumber * lineNumber;
 }
 
-void RootHelper::Draw(int canvasPosition, std::vector<std::string> names,
-                      std::vector<EColor> colors) {
+void RootHelper::Draw(int canvasPosition, std::string padName,
+                      std::string xAxisName, std::string yAxisName,
+                      std::string name, EColor color) {
   R_canvas.cd(canvasPosition);
 
-  R_data[names[0]].SetMarkerStyle(kOpenCircle);
-  R_data[names[0]].SetMarkerColor(colors[0]);
-  R_data[names[0]].SetLineColor(colors[0]);
-  R_data[names[0]].Draw("APL");
+  R_data[name].SetTitle(padName.c_str());
 
-  for (long unsigned int i = 1; i < names.size(); i++) {
-    R_data[names[i]].SetMarkerStyle(kOpenCircle);
-    R_data[names[i]].SetMarkerColor(colors[i]);
-    R_data[names[i]].SetLineColor(colors[i]);
-    R_data[names[i]].Draw("PL same");
-  }
+  R_data[name].GetXaxis()->SetTitle(xAxisName.c_str());
+  R_data[name].GetYaxis()->SetTitle(yAxisName.c_str());
 
-  countDrawn += names.size();
+  R_data[name].SetMarkerStyle(kFullCircle);
+  R_data[name].SetMarkerColor(color);
+  R_data[name].SetLineColor(color);
+  R_data[name].SetEditable(kFALSE);
+  R_data[name].Draw("APL");
+
+  countDrawn++;
 }
 
 void RootHelper::PrintToFile(std::string& fileName, std::string pathToSave) {
-  if (countDrawn == 0) {
-    throw std::runtime_error("Cannot print without having drawn anything");
+  if (!(countDivide == countDrawn)) {
+    throw std::runtime_error("Some of the TPads were left undrawn");
   }
 
   fileName.append(".root");
@@ -52,6 +57,10 @@ void RootHelper::PrintToFile(std::string& fileName, std::string pathToSave) {
 
   R_canvas.Write();
 
+  R_canvas.BuildLegend();
+
   saveFile.Close();
-  //   delete saveFile;
+
+  std::cout << "The graphs hav been saved to: '" << pathToSave + fileName
+            << "' as: '" << R_canvas.GetName() << "'\n\n";
 }
