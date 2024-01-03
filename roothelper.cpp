@@ -8,20 +8,6 @@ RootHelper::RootHelper(std::string name, std::string title, int wide,
 
 RootHelper::~RootHelper() {}
 
-void RootHelper::AddGraph(std::string name, std::vector<int> data) {
-  const int size = data.size() - 1;
-  int x_array[size];
-  int y_array[size];
-  for (int i = 0; i < size; i++) {
-    x_array[i] = i;
-    y_array[i] = data[i];
-  }
-
-  TGraph graph(size, x_array, y_array);
-
-  R_data[name] = graph;
-}
-
 void RootHelper::DivideCanvas(int lineNumber, int columnNumber) {
   R_canvas.Divide(columnNumber, lineNumber);
   countDivide = columnNumber * lineNumber;

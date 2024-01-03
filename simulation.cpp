@@ -252,10 +252,10 @@ void Simulation::PrintGraphs() {
     adaptableVector.push_back(gendata.adaptableNumber);
     totalPopulationVector.push_back(gendata.GetTotalPopulation());
   }
-  rootHelper.AddGraph("Passive", passiveVector);
-  rootHelper.AddGraph("Aggressive", aggressiveVector);
-  rootHelper.AddGraph("Adaptable", adaptableVector);
-  rootHelper.AddGraph("Total-Population", totalPopulationVector);
+  rootHelper.AddGraph<int>("Passive", passiveVector);
+  rootHelper.AddGraph<int>("Aggressive", aggressiveVector);
+  rootHelper.AddGraph<int>("Adaptable", adaptableVector);
+  rootHelper.AddGraph<int>("Total-Population", totalPopulationVector);
   rootHelper.DivideCanvas(2, 2);
   rootHelper.Draw(1, "Passive individuals", "Generations",
                   "Number of individuals", "Passive", kBlue);

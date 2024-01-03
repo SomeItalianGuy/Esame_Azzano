@@ -20,7 +20,20 @@ class RootHelper {
  public:
   RootHelper(std::string name, std::string title, int wide, int height);
   ~RootHelper();
-  void AddGraph(std::string name, std::vector<int> data);
+
+  template <typename T>
+  void AddGraph(std::string name, std::vector<T> data) {
+    const int size = data.size() - 1;
+    int x_array[size];
+    T y_array[size];
+    for (int i = 0; i < size; i++) {
+      x_array[i] = i;
+      y_array[i] = data[i];
+    }
+
+    R_data[name] = TGraph(size, x_array, y_array);
+  }
+
   void DivideCanvas(int lineNumber, int columnNumber);
   void Draw(int canvasPosition, std::string padName, std::string xAxisName,
             std::string yAxisName, std::string name, EColor color);

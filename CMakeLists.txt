@@ -17,14 +17,14 @@ add_compile_definitions(MY_ROOT)
 
 message(ROOT=${ROOT_INCLUDE_DIRS})
   
-add_executable(main main.cpp population.cpp individual.cpp rnghelper.cpp graphic.cpp logical.cpp simulation.cpp roothelper.cpp)
+add_executable(main main.cpp population.cpp individual.cpp rnghelper.cpp graphic.cpp simulation.cpp roothelper.cpp)
 
 target_link_libraries(main ${ROOT_LIBRARIES})
 target_include_directories(main PUBLIC ${ROOT_INCLUDE_DIRS})
 
 else()
 
-add_executable(main main.cpp population.cpp individual.cpp rnghelper.cpp graphic.cpp logical.cpp simulation.cpp)
+add_executable(main main.cpp population.cpp individual.cpp rnghelper.cpp graphic.cpp simulation.cpp)
 
 endif()
 
@@ -38,14 +38,14 @@ if (BUILD_TESTING)
 
 if(ROOT_FOUND)
 
-add_executable(main.test main.test.cpp population.cpp individual.cpp rnghelper.cpp graphic.cpp logical.cpp simulation.cpp roothelper.cpp)
+add_executable(main.test main.test.cpp population.cpp individual.cpp rnghelper.cpp graphic.cpp simulation.cpp roothelper.cpp)
 
 target_link_libraries(main.test ${ROOT_LIBRARIES})
 target_include_directories(main.test PUBLIC ${ROOT_INCLUDE_DIRS})
 
 else()
 
-add_executable(main.test main.test.cpp population.cpp individual.cpp rnghelper.cpp graphic.cpp logical.cpp simulation.cpp)
+add_executable(main.test main.test.cpp population.cpp individual.cpp rnghelper.cpp graphic.cpp simulation.cpp)
 
 endif()
 
