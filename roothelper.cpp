@@ -9,6 +9,11 @@ RootHelper::RootHelper(std::string name, std::string title, int wide,
 RootHelper::~RootHelper() {}
 
 void RootHelper::DivideCanvas(int lineNumber, int columnNumber) {
+  if (lineNumber <= 0 || columnNumber <= 0) {
+    std::string invalidPart = lineNumber <= 0 ? "lines" : "columns";
+    throw std::invalid_argument("Cannot divide the Canvas in 0 or less " +
+                                invalidPart);
+  }
   R_canvas.Divide(columnNumber, lineNumber);
   countDivide = columnNumber * lineNumber;
 }
@@ -16,6 +21,10 @@ void RootHelper::DivideCanvas(int lineNumber, int columnNumber) {
 void RootHelper::Draw(int canvasPosition, std::string padName,
                       std::string xAxisName, std::string yAxisName,
                       std::string name, EColor color) {
+  if (canvasPosition > countDivide) {
+    throw std::invalid_argument(
+        "You are trying to access a TPad That does not exist");
+  }
   R_canvas.cd(canvasPosition);
 
   R_data[name].SetTitle(padName.c_str());
