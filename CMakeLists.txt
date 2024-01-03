@@ -22,7 +22,7 @@ add_executable(main main.cpp population.cpp individual.cpp rnghelper.cpp graphic
 target_link_libraries(main ${ROOT_LIBRARIES})
 target_include_directories(main PUBLIC ${ROOT_INCLUDE_DIRS})
 
-else()
+else() # TODO add the option to disable root
 
 add_executable(main main.cpp population.cpp individual.cpp rnghelper.cpp graphic.cpp simulation.cpp)
 
