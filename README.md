@@ -1,6 +1,10 @@
+# Evoluzione comportamentale
+
 # Relazione del progetto
 
 ### Realizzato da Azzano Michele
+
+[Link per GitHub](https://github.com/SomeItalianGuy/Esame_Azzano)
 
 ## Contents
 
@@ -8,6 +12,7 @@
 - [**Metodi implementativi**](#metodi-implementativi)
     - [**Struttura del progetto**](#struttura-del-progetto)
     - [**Implementazione della popolazione**](#implementazione-della-popolazione)
+    - [**Implementazione della simulzione**](#implementazione-della-simulzione)
 - [**Link Utili**](#link-utili)
 
 ## Introduzione
@@ -49,6 +54,46 @@ Al fine di rendere questa simulazione più verosimile, ho messo dei limiti alla 
 Il primo limite è quello assoluto, si considera un ambiente dove il cibo non è infinito, dunque la popolazione non potrà mai superare una certa soglia, che ho deciso di chiamare `Population::maxPopulation_`.  
 Il secondo è la popolaizone massima per ciascuna generazione, calcolata tramite un semplice prodotto tra la popolazione massima sopra citata e una percentuale che varia da generazione a generazione, si ottiene tramite il metodo `Population::Get_genMaxPopulation()`.  
 Per imitare la variabilità delle condizioni ambientali, con periodi più prosperi e periodi con meno risorse, ho sfruttato una mappa logistica ([Link se si desiderasse approfondire l'argomento](#mappa-logistica)), nello specifico la parte caotica di tale mappa per calcolare la percentuale utilizzata da `Population::Get_genMaxPopulation()`.
+
+### Implementazione della simulzione
+
+Ritengo sia necessario spendere alcune parole per spiegare alcuni  metodi che potrebbero non essere evidenti a prima vista.  
+Il primo di cui parlerò  è `Simulation::SetRandomPlaces`. Questo metodo fa uso del vettore `s_idList`, ovvero il vettore che contiene tutti gli identificativi e per ciascuno di questi viene assegnato a un luogo casuale.
+
+## Interazione con il programma
+
+### Input
+
+Per l'input sarà sufficiente seguire le istruzioni che verranno date a schermo durante il *runtime*, verranno chiesti, in ordine:
+
+- Seed, necessario alla generazione di numeri pseudo-casuali;
+- Numero iniziale di individui passivi;
+- Numero iniziale di individui aggressivi;
+- Numero iniziale di individui adattabili;
+- Comando per far procedere la simulazione;
+- Se si desidera salvare i risultati su un file;
+- Nome del file in cui salvare i dati;
+- Nome da dare alla simulazione, si noti che si può usare lo stesso file più volte;
+
+### Output
+
+Di seguito lascio il tipo di *output* che ci si può aspettare:
+
+## Come compilare
+
+| Azione | Comando |
+|--------|---------|
+| Configurare CMake | `cmake -B "path-to-build" -S .` |
+| Abilitare/Disabilitare ROOT | `-DUSE_ROOT=ON` / `-DUSE_ROOT=OFF` | 
+| Abilitare/Disabilitare i test | `-DBUILD_TESTING=ON` / `-DBUILD_TESTING=OFF` | 
+| Buildare i file, creare e linkare l'eseguibile | `cmake --build "path-to-build"` |
+| Eseguire il programma principale | `./"path-to-build"/main` |
+| Eseguire i test | `./"path-to-build"/main.test` |
+
+Si noti che:
+
+- Il comando per abilitare/disabilitare opzioni deve essere messo di seguito alla configurazione;
+- In diversi comandi è necessario sostiutire "path-to-build" con il path alla cartella all'interno della quale si desidera avere gli eseguibili.
 
 ## Link utili
 
