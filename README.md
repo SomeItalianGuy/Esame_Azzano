@@ -122,7 +122,7 @@ Di seguito lascio un possibile errore che verrà dato nel caso si utilizzi un es
 
 ## Link utili
 
-###### Mappa logistica :
+###### Mappa logistica
 - [Pagina wikipedia](https://it.wikipedia.org/wiki/Mappa_logistica)
 - [Video youtube consigliato](https://www.youtube.com/watch?v=ovJcsL7vyrk)
 
