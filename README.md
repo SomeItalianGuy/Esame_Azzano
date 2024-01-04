@@ -6,13 +6,20 @@
 
 [Link per GitHub](https://github.com/SomeItalianGuy/Esame_Azzano)
 
-## Contents
+## Contenuti
 
 - [**Introduzione**](#introduzione)
 - [**Metodi implementativi**](#metodi-implementativi)
     - [**Struttura del progetto**](#struttura-del-progetto)
     - [**Implementazione della popolazione**](#implementazione-della-popolazione)
     - [**Implementazione della simulzione**](#implementazione-della-simulzione)
+- [**Come compilare**](#come-compilare)
+- [**Interazione con il programma**](#interazione-con-il-programma)
+    - [**Input**](#input)
+    - [**Output**](#output)
+    - [**Analisi dati**](#analisi-dati)
+- [**Modalità di test**](#modalità-di-test)
+- [**Errori previsiti**](#errori-previsti)
 - [**Link Utili**](#link-utili)
 
 ## Introduzione
@@ -60,6 +67,24 @@ Per imitare la variabilità delle condizioni ambientali, con periodi più prospe
 Ritengo sia necessario spendere alcune parole per spiegare alcuni  metodi che potrebbero non essere evidenti a prima vista.  
 Il primo di cui parlerò  è `Simulation::SetRandomPlaces`. Questo metodo fa uso del vettore `s_idList`, ovvero il vettore che contiene tutti gli identificativi e per ciascuno di questi viene assegnato a un luogo casuale.
 
+<!-- TODO controllare se c'è altro da aggiungere qui -->
+
+## Come compilare
+
+| Azione | Comando |
+|--------|---------|
+| Configurare CMake | `cmake -B "path-to-build" -S .` |
+| Abilitare/Disabilitare ROOT | `-DUSE_ROOT=ON` / `-DUSE_ROOT=OFF` | 
+| Abilitare/Disabilitare i test | `-DBUILD_TESTING=ON` / `-DBUILD_TESTING=OFF` | 
+| Buildare i file, creare e linkare l'eseguibile | `cmake --build "path-to-build"` |
+| Eseguire il programma principale | `./"path-to-build"/main` |
+| Eseguire i test | `./"path-to-build"/main.test` |
+
+Si noti che:
+
+- Il comando per abilitare/disabilitare opzioni deve essere messo di seguito alla configurazione;
+- In diversi comandi è necessario sostiutire "path-to-build" con il path alla cartella all'interno della quale si desidera avere gli eseguibili.
+
 ## Interazione con il programma
 
 ### Input
@@ -79,24 +104,26 @@ Per l'input sarà sufficiente seguire le istruzioni che verranno date a schermo 
 
 Di seguito lascio il tipo di *output* che ci si può aspettare:
 
-## Come compilare
+<!-- TODO metti foto output -->
 
-| Azione | Comando |
-|--------|---------|
-| Configurare CMake | `cmake -B "path-to-build" -S .` |
-| Abilitare/Disabilitare ROOT | `-DUSE_ROOT=ON` / `-DUSE_ROOT=OFF` | 
-| Abilitare/Disabilitare i test | `-DBUILD_TESTING=ON` / `-DBUILD_TESTING=OFF` | 
-| Buildare i file, creare e linkare l'eseguibile | `cmake --build "path-to-build"` |
-| Eseguire il programma principale | `./"path-to-build"/main` |
-| Eseguire i test | `./"path-to-build"/main.test` |
+### Analisi dati
 
-Si noti che:
 
-- Il comando per abilitare/disabilitare opzioni deve essere messo di seguito alla configurazione;
-- In diversi comandi è necessario sostiutire "path-to-build" con il path alla cartella all'interno della quale si desidera avere gli eseguibili.
+## Modalità di test
+
+Per assicurare il corretto funzionamento della maggior parte delle funzioni e dei metodi ho abilitato diversi test fatti con l'utilizzo di docTest.  
+I test sono divisi in base alla classe o *namespace*, un'altra suddivisione viene fatta per il singolo pezzo di codice il cui funzionamento è messo alla prova. La maggior parte di questi test sono `CHECK_THROWS`, ovvero controlli che, in determinate condizioni, il codice lanci errori, questo è stato inevitabile, essendo il mio programma un sistema caotico, non è facile prevedere i risultati finali e la maggior parte dei controlli sono da fare al *runtime*.  
+
+## Errori previsti
+
+Di seguito lascio un possibile errore che verrà dato nel caso si utilizzi un eseguibile abilitando ROOT, la causa di questo è il framework di ROOT, poiché questo istanzia dei puntatori a oggetti globali la cui memoria non viene deallocata, il codice funziona perfettamente fino al momento della cancellazione degli oggetti, a questo punto darà errore:
+
+<!-- TODO metti foto errore -->
 
 ## Link utili
 
 ###### Mappa logistica :
 - [Pagina wikipedia](https://it.wikipedia.org/wiki/Mappa_logistica)
 - [Video youtube consigliato](https://www.youtube.com/watch?v=ovJcsL7vyrk)
+
+[Premi qui](#contenuti) per tornare all'indice.
