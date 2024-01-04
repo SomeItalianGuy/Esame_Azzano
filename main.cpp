@@ -84,15 +84,23 @@ int main() {
 #ifdef MY_ROOT
       simulation->PrintGraphs();
 #else
+#ifdef DISABLED_ROOT
+      std::cout << "Since ROOT was disabled, only the .txt file has been "
+                   "provided, if you would like to try the ROOT feature be "
+                   "sure to configure this project with -DUSE_ROOT=ON"
+                << '\n';
+#else
       std::cout
           << "Could not find the root package, therfore the graphs could "
              "not be printed. In order to solve this problem i recommend "
              "visiting "
              "https://root.cern/manual/integrate_root_into_my_cmake_project/"
-          << '\n';
+          << "\n\n";
+#endif
 #endif
 
-      std::cout << "Quitting the program" << '\n';
+      std::cout << "Quitting the program"
+                << "\n\n";
       return EXIT_SUCCESS;
     }
   }
