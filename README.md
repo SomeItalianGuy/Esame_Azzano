@@ -82,7 +82,7 @@ Il primo di cui parlerò  è `Simulation::SetRandomPlaces`. Questo metodo fa uso
 
 Si noti che:
 
-- Il comando per abilitare/disabilitare opzioni deve essere messo di seguito alla configurazione;
+- Il comando per abilitare/disabilitare opzioni deve essere chiamato in contemporanea alla configurazione di CMake;
 - In diversi comandi è necessario sostiutire "path-to-build" con il path alla cartella all'interno della quale si desidera avere gli eseguibili.
 
 ## Interazione con il programma
