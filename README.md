@@ -5,6 +5,8 @@
 ## Contents
 
 - [**Introduzione**](#introduzione)
+- [**Metodi implementativi**](#metodi-implementativi)
+    - [**Implementazione della popolazione**](#implementazione-della-popolazione)
 
 ## Introduzione
 
@@ -28,7 +30,7 @@ Alla fine della raccolta dati verrà data l'opzione di salvare questi su un file
 
 Al fine di rendere questa simulazione più verosimile, ho messo dei limiti alla quantità di individui della popolazione.  
 Il primo limite è quello assoluto, si considera un ambiente dove il cibo non è infinito, dunque la popolazione non potrà mai superare una certa soglia, che ho deciso di chiamare `Population::maxPopulation_`.  
-Il secondo è la popolaizone massima per ciascuna generazione, per imitare la variabilità delle condizioni ambientali, con periodi più prosperi e periodi con meno risorse, ho sfruttato una mappa logistica ([Se si desiderasse approfondire l'argomento consiglio](#mappa-logistica)), nello specifico la parte caotica di tale mappa, 
+Il secondo è la popolaizone massima per ciascuna generazione, per imitare la variabilità delle condizioni ambientali, con periodi più prosperi e periodi con meno risorse, ho sfruttato una mappa logistica ([Link se si desiderasse approfondire l'argomento](#mappa-logistica)), nello specifico la parte caotica di tale mappa.
 
 ## Link utili
 
