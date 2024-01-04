@@ -39,41 +39,40 @@ void Simulation::SaveGenerationData() {
   s_simulationData.push_back(s_population->WriteTo_GenerationData());
 }
 
-void Simulation::PrintPassiveOutput() {
-  int passiveVariation =
-      s_simulationData.back().passiveNumber -
+  void Simulation::PrintOutput(Behavior behavior) {
+    int variation, number;
+    double percentage;
+    std::string coloredText;
+    switch(behavior) {
+    case(Behavior::Passive):
+    variation = s_simulationData.back().passiveNumber -
       s_simulationData[s_simulationData.size() - 2].passiveNumber;
-  Graphic::PrintStats(
-      Graphic::ColorText("Passive", BLUE_TEXT).append(" individuals: "),
-      s_simulationData.back().GetPassivePercentage(),
-      s_simulationData.back().passiveNumber,
-      Graphic::ColorText(Graphic::IntToString(passiveVariation),
-                         passiveVariation > 0 ? GREEN_TEXT : RED_TEXT));
-}
-
-void Simulation::PrintAggressiveOutput() {
-  int aggressiveVariation =
-      s_simulationData.back().aggressiveNumber -
+    coloredText = Graphic::ColorText("Passive", BLUE_TEXT).append(" individuals: ");
+    percentage = s_simulationData.back().GetPassivePercentage();
+    number = s_simulationData.back().passiveNumber;
+    break;
+    case(Behavior::Aggressive):
+    variation = s_simulationData.back().aggressiveNumber -
       s_simulationData[s_simulationData.size() - 2].aggressiveNumber;
-  Graphic::PrintStats(
-      Graphic::ColorText("Aggressive", YELLOW_TEXT).append(" individuals: "),
-      s_simulationData.back().GetAggressivePercentage(),
-      s_simulationData.back().aggressiveNumber,
-      Graphic::ColorText(Graphic::IntToString(aggressiveVariation),
-                         aggressiveVariation > 0 ? GREEN_TEXT : RED_TEXT));
-}
-
-void Simulation::PrintAdaptableOutput() {
-  int adaptableVariation =
-      s_simulationData.back().adaptableNumber -
+    coloredText = Graphic::ColorText("Aggressive", YELLOW_TEXT).append(" individuals: ");
+    percentage = s_simulationData.back().GetAggressivePercentage();
+    number = s_simulationData.back().aggressiveNumber;
+    break;
+    case(Behavior::Adaptable):
+    variation = s_simulationData.back().adaptableNumber -
       s_simulationData[s_simulationData.size() - 2].adaptableNumber;
-  Graphic::PrintStats(
-      Graphic::ColorText("Adaptable", MAGENTA_TEXT).append(" individuals: "),
-      s_simulationData.back().GetAdaptablePercentage(),
-      s_simulationData.back().adaptableNumber,
-      Graphic::ColorText(Graphic::IntToString(adaptableVariation),
-                         adaptableVariation > 0 ? GREEN_TEXT : RED_TEXT));
-}
+    coloredText = Graphic::ColorText("Adaptable", MAGENTA_TEXT).append(" individuals: ");
+    percentage = s_simulationData.back().GetAdaptablePercentage();
+    number = s_simulationData.back().adaptableNumber;
+    break;
+    default:
+    throw std::runtime_error("Found an undefined Behavior in PrintOutput");
+    break;
+    }
+    std::string variationString = Graphic::ColorText(Graphic::IntToString(variation), variation > 0 ? GREEN_TEXT : RED_TEXT);
+
+    Graphic::PrintStats(coloredText, percentage, number, variationString);
+  }
 
 void Simulation::PrintGenerationResults() {
   Graphic::PrintSeparationLines();
@@ -81,11 +80,10 @@ void Simulation::PrintGenerationResults() {
             << " generations, here is how the population is split up:"
             << "\n\n";
   std::cout << "Individual type\t\t\tPercentage\t\tNumber\t\tVariation\n\n";
-  PrintPassiveOutput();
-
-  PrintAggressiveOutput();
-
-  PrintAdaptableOutput();
+  
+  PrintOutput(Behavior::Passive);
+  PrintOutput(Behavior::Aggressive);
+  PrintOutput(Behavior::Adaptable);
 
   Graphic::PrintSeparationLines();
 }

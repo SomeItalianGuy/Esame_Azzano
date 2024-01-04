@@ -24,9 +24,7 @@ class Simulation {
   void SetRandomPlaces();
   void GenerateNextGeneration();
   void SaveGenerationData();
-  void PrintPassiveOutput();
-  void PrintAggressiveOutput();
-  void PrintAdaptableOutput();
+  void PrintOutput(Behavior behavior);
   void PrintGenerationResults();
 
  public:
