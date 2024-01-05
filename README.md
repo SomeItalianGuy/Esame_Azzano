@@ -70,14 +70,18 @@ Per imitare la variabilità delle condizioni ambientali, con periodi più prospe
 
 Ritengo sia necessario spendere alcune parole per spiegare alcuni metodi che potrebbero non essere evidenti a prima vista.  
 Per quanto riguarda gestire la popolazione massima, sono arrivato alla conclusione di due possibilità:  
-    - Impedire le nascite quando si supera la soglia della popolazione massima;  
-    - Rimuovere individui una volta superata la suddetta soglia.  
+
+   - Impedire le nascite quando si supera la soglia della popolazione massima;  
+   - Rimuovere individui una volta superata la suddetta soglia.  
+
 In questo caso ho ritenuto più corretto usare la seconda, in quanto imita il fatto che alcuni individui possano morire per cause al di fuori della mancanza di cibo. L'inconveniente di questa scelta è il fatto che, come ne discuterò meglio nella parte di [analisi](#analisi-e-interpretazione-dati), la simulazione diventi imprevedibile.
 Per quanto riguarda `Simulation::SetRandomPlaces`, questo metodo fa uso del vettore `s_idList`, ovvero il vettore che contiene tutti gli identificativi relativi ad ogni individuo della popolazione e per ciascuno di questi viene assegnato a un luogo casuale.  
 Per quanto riguarda il calcolo della sopravvivenza degli individui ho sfruttato il metodo `Simulation::GenerateNextGeneration`, il quale sfrutta la generazione di numeri pseudo-casuali.  
-Il cibo raccolto è stato ideato in questa maniera:  
-    - 0-1 Probabilità di sopravvivenza;
-    - 1-2 Probabilità di riproduzione.  
+Il cibo raccolto è stato ideato in questa maniera:   
+
+   - 0-1 Probabilità di sopravvivenza;
+   - 1-2 Probabilità di riproduzione.  
+
 Dunque è semplicemente necessario prendere un numero casuale tra 0 e 1, controllare se questo è minore del valore di cibo (per la riproduzione ovviamente si riduce di una unità il cibo) e in tal caso si ha successo.  
 
 ## Come compilare
