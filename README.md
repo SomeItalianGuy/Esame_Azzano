@@ -104,17 +104,17 @@ Per l'input sarà sufficiente seguire le istruzioni che verranno date a schermo 
 
 Di seguito lascio il tipo di *output* che ci si può aspettare:
 
-> -run [value]          : lets you run a number equal to value of generations, for each generation prints the number of individuals for each behavior;
-> -quit                 : lets you quit the simulation.
+> -run [value]          : lets you run a number equal to value of generations, for each generation prints the number of individuals for each behavior;  
+> -quit                 : lets you quit the simulation.  
 
-> What would you like to do now? **quit**
-> Successfully exited the simulation
-> Now that we are done with the simulation, would you like to save the data you have collected in a file?(yes/no) **yes**
-> Please input the name of the file in which you want to save this simulation: **Demo**
-> Please input the title for the simulation to be saved: **Example**
-> Simulation saved to 'results/Demo.txt' as 'Example'
-> The graphs hav been saved to: 'results/Demo.root' as: 'Example'
-> Quitting the program
+> What would you like to do now? **quit**  
+> Successfully exited the simulation  
+> Now that we are done with the simulation, would you like to save the data you have collected in a file?(yes/no) **yes**  
+> Please input the name of the file in which you want to save this simulation: **Demo**  
+> Please input the title for the simulation to be saved: **Example**  
+> Simulation saved to 'results/Demo.txt' as 'Example'  
+> The graphs hav been saved to: 'results/Demo.root' as: 'Example'  
+> Quitting the program  
 
 <!-- TODO metti foto output -->
 
