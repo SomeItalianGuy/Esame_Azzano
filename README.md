@@ -150,7 +150,12 @@ L'idea sarebbe quella di andare a calcolare il cibo medio preso da un tipo di in
 > $M_x = P_x \times C_{x-x} + P_y \times C_{x-y} + P_z \times C_{x-z}$
 
 Dove:  
-- 
+- x,y,z si riferisocono ai tipi di personalità degli idividui
+- M si riferisce al cibo medio da noi cercato
+- P si riferisce alla probabilità di incontrare un individuo con una certa personalità
+- C si riferisce al cibo ottenuto da un'interazione tra due individui con delle rispettive personalità
+
+Per fare questi calcoli ho sfruttato un [calcolatore grafico](#link-utili), settando degli *slider* per le varie probabilità, notando che all'aumentare di individui aggressivi, in maniera controintuitiva, aumentava anche il cibo medio recuperato dai passivi. Questo è un risultato interessante, dato che ci fa vedere come anche i predatori siano importanti in un ambiente dove l'interazione è alla base della sopravvivenza.  
 
 <!-- TODO Scrivere questa parte -->
 
@@ -165,10 +170,10 @@ I test sono divisi in base alla classe o *namespace*, un'altra suddivisione vien
 
 C'è una minuscola probabilità che venga lanciato un errore dal metodo `Population::Calculate_currentPercentage`, trovato a linea 142 di `population.cpp`.  
 
-> if (currentPercentage_ > 1 || currentPercentage_ < 0) {
->    throw std::domain_error(
->        "Current percentage is larger than 1, simulation cannot continue\n");
->  }
+> if (currentPercentage_ > 1 || currentPercentage_ < 0) {  
+>    throw std::domain_error(  
+>        "Current percentage is larger than 1, simulation cannot continue\n");  
+>  }  
  
 Questo errore potrebbe essere lanciato nel caso in cui dei prodotti tra `Population::currentPercentage_` e `Population::reproductionRate_` sia maggiore di 1 o minore di 0, in tutte le prove che ho fatto non è mai stato lanciato questo errore, mi sembra però corretto specificare che nel caso questo succeda sarà sufficiente riprovare a far girare il programma.
 
