@@ -20,6 +20,7 @@
     - [**Analisi dati**](#analisi-dati)
 - [**Modalità di test**](#modalità-di-test)
 - [**Avvertenze**](#avvertenze)
+    - [**Possibile lancio di domain error**](#possibile-lancio-di-domain-error)
     - [**Framework di ROOT**](#framework-di-root)
     - [**Estensioni consigliate**](#estensioni-consigliate)
     - [**Errori previsiti**](#errori-previsti)
@@ -67,10 +68,16 @@ Per imitare la variabilità delle condizioni ambientali, con periodi più prospe
 
 ### Implementazione della simulzione
 
-Ritengo sia necessario spendere alcune parole per spiegare alcuni  metodi che potrebbero non essere evidenti a prima vista.  
-Il primo di cui parlerò  è `Simulation::SetRandomPlaces`. Questo metodo fa uso del vettore `s_idList`, ovvero il vettore che contiene tutti gli identificativi e per ciascuno di questi viene assegnato a un luogo casuale.
-
-<!-- TODO controllare se c'è altro da aggiungere qui -->
+Ritengo sia necessario spendere alcune parole per spiegare alcuni metodi che potrebbero non essere evidenti a prima vista.  
+Per quanto riguarda gestire la popolazione massima, sono arrivato alla conclusione di due possibilità:  
+- Impedire le nascite quando si supera la soglia della popolazione massima;  
+- Rimuovere individui una volta superata la suddetta soglia.
+In questo caso ho ritenuto più corretto usare la seconda, in quanto imita il fatto che alcuni individui possano morire per cause al di fuori della mancanza di cibo. L'inconveniente di questa scelta è il fatto che, come ne discuterò meglio nella parte di [analisi](#analisi-dati), la simulazione diventi imprevedibile.
+Per quanto riguarda `Simulation::SetRandomPlaces`, questo metodo fa uso del vettore `s_idList`, ovvero il vettore che contiene tutti gli identificativi relativi ad ogni individuo della popolazione e per ciascuno di questi viene assegnato a un luogo casuale.    
+Per quanto riguarda il calcolo della sopravvivenza degli individui ho sfruttato il metodo `Simulation::GenerateNextGeneration`, il quale sfrutta la generazione di numeri pseudo-casuali, infatti il cibo raccolto è stato ideato in questa maniera:  
+- 0-1 Probabilità di sopravvivenza;
+- 1-2 Probabilità di riproduzione.
+Dunque è semplicemente necessario prendere un numero casuale tra 0 e 1, controllare se questo è minore del valore di cibo (per la riproduzione ovviamente si riduce di una unità il cibo) e in tal caso si ha successo.  
 
 ## Come compilare
 
@@ -133,16 +140,34 @@ Consiglio di usare il file `.txt` se si fosse interessati ad un'analisi quantita
 
 ![Esempio file root](readme/root-file-example.PNG)  
 
-### Analisi dati
+### Analisi e interpretazione dati
 
+Come anticipato nella parte relativa all'implementazione della [simulazione](#implementazione-della-simulzione), non è possibile prevedere il preciso andamento della popolazione, la miglior stima che si può fare è sulla popolazione totale, che ci si aspetta abbia un comportamento simil-ondulatorio, con generazioni che fanno da picchi e  generazioni più "depresse".  
+Questo a causa della morte casuale di individui per via della mia decisione su come limitare la popolazione.  
+Un'esperimento interessante che si può fare partendo da questo programma è vedere cosa succede modificando i valori del cibo ottenuto dalle interazioni tra individui.  
+L'idea sarebbe quella di andare a calcolare il cibo medio preso da un tipo di indiviui, tramite il calcolo:  
+
+> $M_x = P_x * C_(x-x) + P_y * C_(x-y) + P_z * C_(x-z)$
+
+<!-- TODO Scrivere questa parte -->
 
 ## Modalità di test
 
 Per assicurare il corretto funzionamento della maggior parte delle funzioni e dei metodi ho abilitato diversi test fatti con l'utilizzo di docTest.  
 I test sono divisi in base alla classe o *namespace*, un'altra suddivisione viene fatta per il singolo pezzo di codice il cui funzionamento è messo alla prova. La maggior parte di questi test sono `CHECK_THROWS`, ovvero controlli che, in determinate condizioni, il codice lanci errori, questo è stato inevitabile, essendo il mio programma un sistema caotico, non è facile prevedere i risultati finali e la maggior parte dei controlli sono da fare al *runtime*.  
 
-
 ## Avvertenze
+
+### Possibile lancio di domain error
+
+C'è una minuscola probabilità che venga lanciato un errore dal metodo `Population::Calculate_currentPercentage`, trovato a linea 142 di `population.cpp`.  
+
+> if (currentPercentage_ > 1 || currentPercentage_ < 0) {
+>    throw std::domain_error(
+>        "Current percentage is larger than 1, simulation cannot continue\n");
+>  }
+ 
+Questo errore potrebbe essere lanciato nel caso in cui dei prodotti tra `Population::currentPercentage_` e `Population::reproductionRate_` sia maggiore di 1 o minore di 0, in tutte le prove che ho fatto non è mai stato lanciato questo errore, mi sembra però corretto specificare che nel caso questo succeda sarà sufficiente riprovare a far girare il programma.
 
 ### Framework di ROOT
 
