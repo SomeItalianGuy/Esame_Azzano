@@ -19,7 +19,10 @@
     - [**Output**](#output)
     - [**Analisi dati**](#analisi-dati)
 - [**Modalità di test**](#modalità-di-test)
-- [**Errori previsiti**](#errori-previsti)
+- [**Avvertenze**](#avvertenze)
+    - [**Framework di ROOT**](#framework-di-root)
+    - [**Estensioni consigliate**](#estensioni-consigliate)
+    - [**Errori previsiti**](#errori-previsti)
 - [**Link Utili**](#link-utili)
 
 ## Introduzione
@@ -138,16 +141,34 @@ Consiglio di usare il file `.txt` se si fosse interessati ad un'analisi quantita
 Per assicurare il corretto funzionamento della maggior parte delle funzioni e dei metodi ho abilitato diversi test fatti con l'utilizzo di docTest.  
 I test sono divisi in base alla classe o *namespace*, un'altra suddivisione viene fatta per il singolo pezzo di codice il cui funzionamento è messo alla prova. La maggior parte di questi test sono `CHECK_THROWS`, ovvero controlli che, in determinate condizioni, il codice lanci errori, questo è stato inevitabile, essendo il mio programma un sistema caotico, non è facile prevedere i risultati finali e la maggior parte dei controlli sono da fare al *runtime*.  
 
-## Errori previsti
+
+## Avvertenze
+
+### Framework di ROOT
+
+Per il corretto funzionamento di questo progetto sarà necessario avere installato il *framework* di ROOT, nel caso in cui non lo si avesse ancora installato, si può trovare una guida [qui](#guida-installazione-root)
+
+### Estensioni consigliate
+
+Dal momento che viene creato un file root, sarà necessaria un'estensione di VSCode, mi sento di raccomandare l'estensione che ho utilizzato durante lo sviluppo di questo progetto, ROOT File Viewer.  
+
+![Estensione root](readme/Estensione-root.PNG)
+
+### Errori previsti
 
 Di seguito lascio un possibile errore che verrà dato nel caso si utilizzi un eseguibile abilitando ROOT, la causa di questo è il framework di ROOT, poiché questo istanzia dei puntatori a oggetti globali la cui memoria non viene deallocata, il codice funziona perfettamente fino al momento della cancellazione degli oggetti, a questo punto darà errore:
 
-<!-- TODO metti foto errore -->
+![Errore root](readme/ROOT-errror-Example.PNG)  
+
+Se si volesse sfruttare il programma senza ricevere questo tipo di errore allora sarà necessario disabilitare root, il comando atto a questo scopo può essere trovato [qui](#come-compilare).
 
 ## Link utili
 
 ###### Mappa logistica
 - [Pagina wikipedia](https://it.wikipedia.org/wiki/Mappa_logistica)
 - [Video youtube consigliato](https://www.youtube.com/watch?v=ovJcsL7vyrk)
+
+###### Guida installazione ROOT
+- [Sito ufficiale ROOT](https://root.cern/install/)
 
 [Premi qui](#contenuti) per tornare all'indice.
