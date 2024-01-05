@@ -33,14 +33,14 @@ In questo contesto si considerano individui capaci di uno solo di tre comportame
 
 - Passivo, l'individuo eviterà i conflitti per cercare di dividere equamente il cibo;
 - Aggressivo, l'individuo tende a prendere la maggior parte del cibo per sè, ma perderà molte energie se dovesse entrare in competizione;
-- Adattabile, l'individuo apprezzerà l'altruismo del Passivo, lasciandogli più cibo, se dovesse incontrare un individuo aggressivo prenderà la maggior parte del cibo.
+- Adattabile, l'individuo apprezzerà l'altruismo del Passivo, lasciandogli più cibo, mentre vincerà la competizione con un individuo aggressivo.  
 
 Dato questo setup, simile a "Sasso, Carta, Forbice", dove ciacuna opzione ha una forza e una debolezza, si lasciano passare le generazioni desiderate e si nota come la popolazione sia evoluta.  
 In questa simulazione si considera l'assenza di altri esseri viventi e una proporzionailtà diretta tra cibo trovato e possibilità di sopravvivenza/riproduzione.  
-Per la relaizzazione del progetto ho considerato un sistema dove, per ogni generazione, viene creata una certa quantità di luoghi, ciascuno dei quali contenenti due unità di cibo.  
+Per la realizzazione del progetto ho considerato un sistema dove, per ogni generazione, viene creata una certa quantità di luoghi, ciascuno dei quali contenenti due unità di cibo.  
 A questo punto ciascun individuo, in maniera casuale, si dirige a uno di questi luoghi, se questo individuo fosse solo, allora tornerà a casa con due unità di cibo e sarà sicuro di sopravvivere e riprodursi, se invece incontrasse un altro individuo allora vi sarà un'interazione basata sulle personalità dei due contendenti per decidere come dividersi le vivande.  
-Verranno dunque calcolate, su base casuale, la sopravvivenza e la riproduzione di ciascun individuo, dunque vengono stampati a schermo i risultati generazione per generazione.  
-Alla fine della raccolta dati verrà data l'opzione di salvare questi su un file di testo e, se l'opzione per usare root fosse abilitata, stampare grafici relativi all'andamento della popolazione. 
+Verranno calcolate, su base casuale, la sopravvivenza e la riproduzione di ciascun individuo, dunque vengono stampati a schermo i risultati generazione per generazione.  
+Alla fine della raccolta dati verrà data l'opzione di salvare questi su un file di testo e, se l'opzione per usare ROOT fosse abilitata, stampare grafici relativi all'andamento della popolazione. 
 
 ## Metodi implementativi
 
@@ -71,12 +71,13 @@ Per imitare la variabilità delle condizioni ambientali, con periodi più prospe
 Ritengo sia necessario spendere alcune parole per spiegare alcuni metodi che potrebbero non essere evidenti a prima vista.  
 Per quanto riguarda gestire la popolazione massima, sono arrivato alla conclusione di due possibilità:  
 - Impedire le nascite quando si supera la soglia della popolazione massima;  
-- Rimuovere individui una volta superata la suddetta soglia.
-In questo caso ho ritenuto più corretto usare la seconda, in quanto imita il fatto che alcuni individui possano morire per cause al di fuori della mancanza di cibo. L'inconveniente di questa scelta è il fatto che, come ne discuterò meglio nella parte di [analisi](#analisi-dati), la simulazione diventi imprevedibile.
-Per quanto riguarda `Simulation::SetRandomPlaces`, questo metodo fa uso del vettore `s_idList`, ovvero il vettore che contiene tutti gli identificativi relativi ad ogni individuo della popolazione e per ciascuno di questi viene assegnato a un luogo casuale.    
-Per quanto riguarda il calcolo della sopravvivenza degli individui ho sfruttato il metodo `Simulation::GenerateNextGeneration`, il quale sfrutta la generazione di numeri pseudo-casuali, infatti il cibo raccolto è stato ideato in questa maniera:  
+- Rimuovere individui una volta superata la suddetta soglia.  
+In questo caso ho ritenuto più corretto usare la seconda, in quanto imita il fatto che alcuni individui possano morire per cause al di fuori della mancanza di cibo. L'inconveniente di questa scelta è il fatto che, come ne discuterò meglio nella parte di [analisi](#analisi-e-interpretazione-dati), la simulazione diventi imprevedibile.
+Per quanto riguarda `Simulation::SetRandomPlaces`, questo metodo fa uso del vettore `s_idList`, ovvero il vettore che contiene tutti gli identificativi relativi ad ogni individuo della popolazione e per ciascuno di questi viene assegnato a un luogo casuale.  
+Per quanto riguarda il calcolo della sopravvivenza degli individui ho sfruttato il metodo `Simulation::GenerateNextGeneration`, il quale sfrutta la generazione di numeri pseudo-casuali.  
+Il cibo raccolto è stato ideato in questa maniera:  
 - 0-1 Probabilità di sopravvivenza;
-- 1-2 Probabilità di riproduzione.
+- 1-2 Probabilità di riproduzione.  
 Dunque è semplicemente necessario prendere un numero casuale tra 0 e 1, controllare se questo è minore del valore di cibo (per la riproduzione ovviamente si riduce di una unità il cibo) e in tal caso si ha successo.  
 
 ## Come compilare
@@ -147,7 +148,7 @@ Questo a causa della morte casuale di individui per via della mia decisione su c
 Un'esperimento interessante che si può fare partendo da questo programma è vedere cosa succede modificando i valori del cibo ottenuto dalle interazioni tra individui.  
 L'idea sarebbe quella di andare a calcolare il cibo medio preso da un tipo di indiviui, tramite il calcolo:  
 
-> $M_x = P_x \times C_{x-x} + P_y \times C_{x-y} + P_z \times C_{x-z}$
+$M_x = P_x \times C_{x-x} + P_y \times C_{x-y} + P_z \times C_{x-z}$
 
 Dove:  
 - x,y,z si riferisocono ai tipi di personalità degli idividui
@@ -173,11 +174,11 @@ C'è una minuscola probabilità che venga lanciato un errore dal metodo `Populat
 >        "Current percentage is larger than 1, simulation cannot continue\n");  
 >  }  
  
-Questo errore potrebbe essere lanciato nel caso in cui dei prodotti tra `Population::currentPercentage_` e `Population::reproductionRate_` sia maggiore di 1 o minore di 0, in tutte le prove che ho fatto non è mai stato lanciato questo errore, mi sembra però corretto specificare che nel caso questo succeda sarà sufficiente riprovare a far girare il programma.
+Questo errore potrebbe essere lanciato nel caso il prodotto tra `Population::currentPercentage_` e `Population::reproductionRate_` sia maggiore di 1 o minore di 0, in tutte le prove che ho fatto non è mai stato lanciato questo errore, dato che questo è un errore sporadico che potrebbe venir fuori in qualunque momento, mi sembra corretto specificare che nel caso questo succeda sarà sufficiente riprovare a far girare il programma.
 
 ### Framework di ROOT
 
-Per il corretto funzionamento di questo progetto sarà necessario avere installato il *framework* di ROOT, nel caso in cui non lo si avesse ancora installato, si può trovare una guida [qui](#guida-installazione-root)
+Per il corretto funzionamento di questo progetto sarà necessario avere installato il *framework* di ROOT, nel caso in cui non lo si avesse ancora installato, si può trovare una guida [qui](#guida-installazione-root).
 
 ### Estensioni consigliate
 
@@ -191,7 +192,7 @@ Di seguito lascio un possibile errore che verrà dato nel caso si utilizzi un es
 
 ![Errore root](readme/ROOT-errror-Example.PNG)  
 
-Se si volesse sfruttare il programma senza ricevere questo tipo di errore allora sarà necessario disabilitare root, il comando atto a questo scopo può essere trovato [qui](#come-compilare).
+Se si volesse sfruttare il programma senza ricevere questo tipo di errore allora sarà necessario disabilitare root, il comando atto a questo scopo può essere trovato [qui].(#come-compilare).
 
 ## Link utili
 
