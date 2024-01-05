@@ -145,7 +145,7 @@ void Population::Calculate_currentPercentage() {
 
   if (currentPercentage_ > 1 || currentPercentage_ < 0) {
     throw std::domain_error(
-        "Current percentage is larger than 1, simulation connot continue\n");
+        "Current percentage is larger than 1, simulation cannot continue\n");
   }
 }
 
