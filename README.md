@@ -17,7 +17,7 @@
 - [**Interazione con il programma**](#interazione-con-il-programma)
     - [**Input**](#input)
     - [**Output**](#output)
-    - [**Analisi dati**](#analisi-dati)
+    - [**Analisi dati**](#analisi-e-interpretazione-dati)
 - [**Modalità di test**](#modalità-di-test)
 - [**Avvertenze**](#avvertenze)
     - [**Possibile lancio di domain error**](#possibile-lancio-di-domain-error)
@@ -147,7 +147,7 @@ Questo a causa della morte casuale di individui per via della mia decisione su c
 Un'esperimento interessante che si può fare partendo da questo programma è vedere cosa succede modificando i valori del cibo ottenuto dalle interazioni tra individui.  
 L'idea sarebbe quella di andare a calcolare il cibo medio preso da un tipo di indiviui, tramite il calcolo:  
 
-> $M_x = P_x * C_(x-x) + P_y * C_(x-y) + P_z * C_(x-z)$
+> $M_x = P_x * C_{x-x} + P_y * C_{x-y} + P_z * C_{x-z}$
 
 <!-- TODO Scrivere questa parte -->
 
