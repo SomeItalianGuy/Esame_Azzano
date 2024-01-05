@@ -102,21 +102,33 @@ Per l'input sarà sufficiente seguire le istruzioni che verranno date a schermo 
 
 ### Output
 
-Di seguito lascio il tipo di *output* che ci si può aspettare:
+A livello di *output* vi è la necessità di distinguere tra il terminale e i file generati.  
+Quando vengono fatte girare un certo numero di generazioni, ci si può aspettare un risultato simile a:  
 
-> -run [value]          : lets you run a number equal to value of generations, for each generation prints the number of individuals for each behavior;  
-> -quit                 : lets you quit the simulation.  
+![Esempio output](readme/output-example.PNG)  
 
-> What would you like to do now? **quit**  
-> Successfully exited the simulation  
-> Now that we are done with the simulation, would you like to save the data you have collected in a file?(yes/no) **yes**  
-> Please input the name of the file in which you want to save this simulation: **Demo**  
-> Please input the title for the simulation to be saved: **Example**  
-> Simulation saved to 'results/Demo.txt' as 'Example'  
-> The graphs hav been saved to: 'results/Demo.root' as: 'Example'  
-> Quitting the program  
+Una volta che si è soddsfatti della quantità di dati raccolti, si può passare alla fase di salvataggio della simulazione:  
 
-<!-- TODO metti foto output -->
+![Salvataggio dati](readme/Quit-&-Save-example.PNG)  
+
+Oppure, nel caso in cui non si sia utilizzato ROOT, si avrà:  
+
+![Salvare senza root](readme/No-root-save-example.PNG)  
+
+Se invece non si è soddisfatti della quantità di dati raccolti, si può sempre evitare di salvare, in tal caso il programma verrà immediatamente chiuso.  
+Una volta salvati i file, questi verranno creati all'interno della cartella `results/`, che verrà creata in automatico se non fosse esistente, nell'esempio seguente ho dato al file il nome "Demo":  
+
+![Esempio file creati](readme/Example-created-files.PNG)  
+
+Consiglio di usare il file `.txt` se si fosse interessati ad un'analisi quantitativa dei dati, se si fosse interessati solo ad una analisi qualitativa allora il file `.root` sarà più che sufficiente, lascio di seguito degli esempi di questi ultimi:  
+
+- File `.txt`  
+
+![Esempio file txt](readme/txt-file-example.PNG)  
+
+- File `.root`  
+
+![Esempio file root](readme/root-file-example.PNG)  
 
 ### Analisi dati
 
