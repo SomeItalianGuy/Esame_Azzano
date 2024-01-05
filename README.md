@@ -170,10 +170,10 @@ I test sono divisi in base alla classe o *namespace*, un'altra suddivisione vien
 
 C'è una minuscola probabilità che venga lanciato un errore dal metodo `Population::Calculate_currentPercentage`, trovato a linea 142 di `population.cpp`.  
 
-> if (currentPercentage_ > 1 || currentPercentage_ < 0) {  
+> `if (currentPercentage_ > 1 || currentPercentage_ < 0) {  
 >    throw std::domain_error(  
 >        "Current percentage is larger than 1, simulation cannot continue\n");  
->  }  
+>  }`
  
 Questo errore potrebbe essere lanciato nel caso in cui dei prodotti tra `Population::currentPercentage_` e `Population::reproductionRate_` sia maggiore di 1 o minore di 0, in tutte le prove che ho fatto non è mai stato lanciato questo errore, mi sembra però corretto specificare che nel caso questo succeda sarà sufficiente riprovare a far girare il programma.
 
