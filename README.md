@@ -17,7 +17,7 @@
 - [**Interazione con il programma**](#interazione-con-il-programma)
     - [**Input**](#input)
     - [**Output**](#output)
-    - [**Analisi dati**](#analisi-e-interpretazione-dati)
+    - [**Analisi e interpretazione dati**](#analisi-e-interpretazione-dati)
 - [**Modalità di test**](#modalità-di-test)
 - [**Avvertenze**](#avvertenze)
     - [**Possibile lancio di domain error**](#possibile-lancio-di-domain-error)
@@ -157,8 +157,6 @@ Dove:
 
 Per fare questi calcoli ho sfruttato un [calcolatore grafico](#link-utili), settando degli *slider* per le varie probabilità, notando che all'aumentare di individui aggressivi, in maniera controintuitiva, aumentava anche il cibo medio recuperato dai passivi. Questo è un risultato interessante, dato che ci fa vedere come anche i predatori siano importanti in un ambiente dove l'interazione è alla base della sopravvivenza.  
 
-<!-- TODO Scrivere questa parte -->
-
 ## Modalità di test
 
 Per assicurare il corretto funzionamento della maggior parte delle funzioni e dei metodi ho abilitato diversi test fatti con l'utilizzo di docTest.  
@@ -170,10 +168,10 @@ I test sono divisi in base alla classe o *namespace*, un'altra suddivisione vien
 
 C'è una minuscola probabilità che venga lanciato un errore dal metodo `Population::Calculate_currentPercentage`, trovato a linea 142 di `population.cpp`.  
 
-> `if (currentPercentage_ > 1 || currentPercentage_ < 0) {  
+> if (currentPercentage_ > 1 || currentPercentage_ < 0) {  
 >    throw std::domain_error(  
 >        "Current percentage is larger than 1, simulation cannot continue\n");  
->  }`
+>  }  
  
 Questo errore potrebbe essere lanciato nel caso in cui dei prodotti tra `Population::currentPercentage_` e `Population::reproductionRate_` sia maggiore di 1 o minore di 0, in tutte le prove che ho fatto non è mai stato lanciato questo errore, mi sembra però corretto specificare che nel caso questo succeda sarà sufficiente riprovare a far girare il programma.
 
@@ -203,5 +201,8 @@ Se si volesse sfruttare il programma senza ricevere questo tipo di errore allora
 
 ###### Guida installazione ROOT
 - [Sito ufficiale ROOT](https://root.cern/install/)
+
+###### Calcolatore grafico
+- [Desmos](https://www.desmos.com/calculator?lang=it)
 
 [Premi qui](#contenuti) per tornare all'indice.
